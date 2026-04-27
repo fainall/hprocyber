@@ -69,13 +69,13 @@ window.CONTENT = {
       title_post: " de la ciberseguridad.",
       desc: "Acompañamos a tu organización en cada etapa de madurez, desde la estrategia hasta la operación.",
       items: [
-        { slug: "gobierno", num: "01", t: "Gobierno de Ciberseguridad", d: "Modelos de gobierno estructurados: roles, responsabilidades, comités y reporting alineados al negocio.", tags: ["Roles", "Comités", "Reporting"] },
-        { slug: "assessment", num: "02", t: "Assessment y Diagnóstico", d: "Evaluación de madurez y exposición basada en NIST, CIS e ISO, con informe ejecutivo y plan de acción.", tags: ["NIST", "CIS", "ISO"] },
-        { slug: "compliance", num: "03", t: "Compliance Normativo", d: "Cumplimiento de normativa chilena e internacional. Diagnóstico, controles y preparación para auditorías.", tags: ["Chile", "ISO 27001", "Auditoría"] },
-        { slug: "master-plan", num: "04", t: "Plan Director (Master Plan)", d: "Hoja de ruta priorizada: diagnóstico, fases, indicadores y costos definidos.", tags: ["Roadmap", "KPIs", "Fases"] },
-        { slug: "terceros", num: "05", t: "Gestión de Terceros", d: "Evaluación y gobernanza del riesgo de proveedores y socios tecnológicos.", tags: ["Proveedores", "Riesgos", "Seguimiento"] },
-        { slug: "continuidad", num: "06", t: "Continuidad Operacional", d: "BCP, DRP, playbooks de respuesta y simulación de escenarios críticos.", tags: ["BCP", "DRP", "Playbooks"] },
-        { slug: "awareness", num: "07", t: "Cultura y Awareness", d: "Capacitación, simulación de phishing y campañas que convierten al equipo en primera línea de defensa.", tags: ["Phishing", "Training", "Cultura"] }
+        { slug: "gobierno", num: "01", t: "Estrategia de Gobierno", d: "Modelos estratégicos adaptados a la madurez: perfiles, roles, comités ejecutivos y técnicos con métricas y agendas claras.", tags: ["Roles", "Comités", "Reporting"] },
+        { slug: "assessment", num: "02", t: "Assessment de Ciberseguridad", d: "Diagnóstico 360° de madurez y exposición en entornos TI y OT bajo NIST CSF, CIS Controls, ISO 27001 e ISO 31000.", tags: ["NIST", "CIS", "ISO 31000"] },
+        { slug: "compliance", num: "03", t: "Compliance Normativo", d: "Cumplimiento de la Ley Marco N°21.663, Ley de Datos N°21.719 y normas CMF (NCG N°454 y N°510).", tags: ["Ley 21.663", "Ley 21.719", "CMF"] },
+        { slug: "master-plan", num: "04", t: "Plan Director (Master Plan)", d: "Hoja de ruta priorizada: diagnóstico de brechas, fases con hitos, estimación de costos e indicadores de éxito.", tags: ["Roadmap", "KPIs", "Fases"] },
+        { slug: "terceros", num: "05", t: "Gestión de Terceros", d: "Evaluación estructurada con cuestionarios, tableros de riesgo (scoring) y modelo de gobernanza continua con onboarding seguro.", tags: ["Scoring", "Gobernanza", "Proveedores"] },
+        { slug: "continuidad", num: "06", t: "Continuidad Operacional", d: "Diagnóstico de ciberresiliencia, BCP/DRP con escenarios de ciberataques y playbooks para ransomware y phishing.", tags: ["BCP", "DRP", "Playbooks"] },
+        { slug: "awareness", num: "07", t: "Awareness en Ciberseguridad", d: "Diagnóstico Cultural, contenidos por perfil (directivos, técnicos, usuarios) y campañas de phishing simulado continuas.", tags: ["Diagnóstico Cultural", "Phishing", "Cultura"] }
       ]
     },
     advisor: {
@@ -111,11 +111,10 @@ window.CONTENT = {
       title_em: "H PRO CYBER",
       title_post: "?",
       items: [
-        { t: "Visión estratégica y técnica integrada", d: "Una sola práctica que une gobierno, cumplimiento y operación — no silos." },
-        { t: "Enfoque orientado a negocio", d: "Traducimos la complejidad técnica en decisiones ejecutivas medibles." },
-        { t: "Estándares internacionales", d: "Aplicamos NIST, CIS, ISO 27001 y frameworks reconocidos." },
-        { t: "Entregables accionables", d: "Planes claros, priorizados y ejecutables — no documentos que quedan en el cajón." },
-        { t: "Acompañamiento continuo", d: "No solo consultoría puntual: somos un socio sostenido en el tiempo." }
+        { t: "Visión Integral", d: "Cubrimos toda la cadena de valor, desde la estrategia de gobierno hasta la cultura de seguridad operacional." },
+        { t: "Frameworks Reconocidos", d: "Aplicamos NIST CSF, CIS Controls, ISO 27001, ISO 31000 y regulaciones locales vigentes en Chile." },
+        { t: "Equipo Especializado", d: "Consultores con experiencia en TI, OT y en los sectores regulados de Chile: financiero, salud, industria." },
+        { t: "Entregables Accionables", d: "Informes ejecutivos y operativos claros que facilitan la toma de decisiones — no documentos que quedan en el cajón." }
       ]
     },
     about: {
@@ -239,13 +238,13 @@ window.CONTENT = {
       title_post: " approach to cybersecurity.",
       desc: "We accompany your organization at every maturity stage, from strategy to operations.",
       items: [
-        { slug: "gobierno", num: "01", t: "Cybersecurity Governance", d: "Governance models: roles, responsibilities, committees and reporting aligned to the business.", tags: ["Roles", "Committees", "Reporting"] },
-        { slug: "assessment", num: "02", t: "Assessment & Diagnosis", d: "Maturity and exposure evaluation based on NIST, CIS and ISO, with executive report and action plan.", tags: ["NIST", "CIS", "ISO"] },
-        { slug: "compliance", num: "03", t: "Regulatory Compliance", d: "Compliance with Chilean and international regulation. Diagnosis, controls and audit readiness.", tags: ["Chile", "ISO 27001", "Audit"] },
-        { slug: "master-plan", num: "04", t: "Master Plan", d: "Prioritized roadmap: diagnosis, phases, KPIs and defined costs.", tags: ["Roadmap", "KPIs", "Phases"] },
-        { slug: "terceros", num: "05", t: "Third-Party Risk", d: "Evaluation and governance of vendor and partner risk.", tags: ["Vendors", "Risk", "Monitoring"] },
-        { slug: "continuidad", num: "06", t: "Business Continuity", d: "BCP, DRP, response playbooks and critical scenario simulation.", tags: ["BCP", "DRP", "Playbooks"] },
-        { slug: "awareness", num: "07", t: "Awareness & Culture", d: "Training, phishing simulation and campaigns that turn your team into the first line of defense.", tags: ["Phishing", "Training", "Culture"] }
+        { slug: "gobierno", num: "01", t: "Governance Strategy", d: "Strategic governance models adapted to maturity: profiles, roles, executive and technical committees with clear metrics and agendas.", tags: ["Roles", "Committees", "Reporting"] },
+        { slug: "assessment", num: "02", t: "Cybersecurity Assessment", d: "360° maturity and exposure diagnosis across IT and OT environments under NIST CSF, CIS Controls, ISO 27001 and ISO 31000.", tags: ["NIST", "CIS", "ISO 31000"] },
+        { slug: "compliance", num: "03", t: "Regulatory Compliance", d: "Compliance with Chile's Cybersecurity Framework Law N°21.663, Data Protection Law N°21.719 and CMF regulations (NCG N°454 & N°510).", tags: ["Law 21.663", "Law 21.719", "CMF"] },
+        { slug: "master-plan", num: "04", t: "Master Plan", d: "Prioritized roadmap: gap diagnosis, phased milestones, cost estimation and success indicators.", tags: ["Roadmap", "KPIs", "Phases"] },
+        { slug: "terceros", num: "05", t: "Third-Party Risk", d: "Structured evaluation with questionnaires, risk scoring dashboards and a continuous governance model with secure onboarding.", tags: ["Scoring", "Governance", "Vendors"] },
+        { slug: "continuidad", num: "06", t: "Business Continuity", d: "Cyber-resilience diagnosis, BCP/DRP with cyberattack scenarios and playbooks for ransomware and phishing.", tags: ["BCP", "DRP", "Playbooks"] },
+        { slug: "awareness", num: "07", t: "Security Awareness", d: "Cultural Diagnosis, audience-segmented content (executives, technical, end users) and continuous phishing simulation campaigns.", tags: ["Cultural Diagnosis", "Phishing", "Culture"] }
       ]
     },
     advisor: {
@@ -281,11 +280,10 @@ window.CONTENT = {
       title_em: "H PRO CYBER",
       title_post: "?",
       items: [
-        { t: "Strategy and technical depth integrated", d: "One practice uniting governance, compliance and operations — no silos." },
-        { t: "Business-oriented approach", d: "We translate technical complexity into measurable executive decisions." },
-        { t: "International standards", d: "NIST, CIS, ISO 27001 and recognized frameworks." },
-        { t: "Actionable deliverables", d: "Clear, prioritized, executable plans — not shelf-ware." },
-        { t: "Sustained engagement", d: "Not a one-off consultancy: a long-term strategic partner." }
+        { t: "Integral Vision", d: "We cover the full value chain — from governance strategy to operational security culture." },
+        { t: "Recognized Frameworks", d: "NIST CSF, CIS Controls, ISO 27001, ISO 31000 and current local regulations in Chile." },
+        { t: "Specialized Team", d: "Consultants with expertise in IT, OT and Chile's regulated sectors: financial, healthcare, industry." },
+        { t: "Actionable Deliverables", d: "Clear executive and operational reports that enable decision-making — not shelf-ware." }
       ]
     },
     about: {

@@ -5,21 +5,21 @@ window.SERVICE_DETAILS = {
       kind: "service",
       slug: "gobierno",
       num: "01",
-      title_pre: "Gobierno de ",
-      title_em: "Ciberseguridad",
+      title_pre: "Estrategia de ",
+      title_em: "Gobierno",
       title_post: "",
-      lead: "Estructuramos roles, procesos y gobierno para que la ciberseguridad sea una capacidad gestionable, medible y alineada al negocio.",
+      lead: "Diseñamos modelos estratégicos de gobierno adaptados a la madurez de tu organización para alinear la ciberseguridad con los objetivos del negocio.",
       problem: "Sin un modelo de gobierno claro, la ciberseguridad opera en silos: decisiones reactivas, responsabilidades difusas y reportes que no llegan al directorio. El resultado es exposición sostenida, esfuerzo duplicado y baja capacidad de demostrar control.",
       whatYouGet: [
-        { t: "Modelo de gobierno", d: "Estructura de roles, comités y líneas de reporte alineadas a la realidad de la organización." },
-        { t: "Política marco", d: "Política de seguridad y políticas específicas (acceso, datos, incidentes, terceros, BCM)." },
+        { t: "Perfiles estratégicos y operativos", d: "Identificación y mapeo de perfiles con sus alcances, responsabilidades y niveles de autoridad." },
+        { t: "Estructura de comités", d: "Diseño de comité ejecutivo, comité técnico y grupos de trabajo con métricas y agendas claras." },
         { t: "Matriz RACI", d: "Responsabilidades claras entre TI, seguridad, riesgo, legal y áreas de negocio." },
         { t: "Tablero ejecutivo", d: "KPIs y métricas de seguridad para directorio y comité ejecutivo." },
         { t: "Marco de cumplimiento", d: "Mapeo a NIST CSF, ISO 27001 y normativa local aplicable." }
       ],
       process: [
         { n: "01", t: "Levantamiento", d: "Entrevistas con stakeholders, revisión documental y análisis del modelo actual." },
-        { n: "02", t: "Diseño", d: "Definición de modelo target, comités, roles y políticas marco." },
+        { n: "02", t: "Diseño", d: "Definición de modelo target, perfiles, comités, roles y políticas marco." },
         { n: "03", t: "Validación", d: "Workshops con liderazgo y ajuste fino del modelo propuesto." },
         { n: "04", t: "Implementación", d: "Despliegue progresivo, capacitación de roles clave y formalización." },
         { n: "05", t: "Sostenimiento", d: "Revisión periódica, métricas y ajustes según evolución del negocio." }
@@ -36,14 +36,14 @@ window.SERVICE_DETAILS = {
       kind: "service",
       slug: "assessment",
       num: "02",
-      title_pre: "Assessment y ",
-      title_em: "Diagnóstico",
+      title_pre: "Assessment de ",
+      title_em: "Ciberseguridad TI",
       title_post: "",
-      lead: "Evaluación objetiva del nivel de madurez y exposición de tu organización frente a marcos internacionales y amenazas reales.",
-      problem: "Antes de invertir en controles, hay que saber dónde se está. La mayoría de las organizaciones no tiene una imagen clara de su postura: brechas, riesgos críticos, cumplimiento parcial. El assessment ordena la conversación con datos.",
+      lead: "Evaluamos el nivel de madurez y la exposición real de los entornos tecnológicos y operacionales (TI y OT) con un diagnóstico 360° objetivo y accionable.",
+      problem: "Antes de invertir en controles, hay que saber dónde se está. La mayoría de las organizaciones no tiene una imagen clara de su postura en TI y OT: brechas, riesgos críticos, cumplimiento parcial. El assessment ordena la conversación con datos.",
       whatYouGet: [
-        { t: "Evaluación de madurez", d: "Análisis sobre NIST CSF, CIS Controls v8 e ISO 27001 con score por dominio." },
-        { t: "Análisis de brechas", d: "Identificación priorizada de controles faltantes o parciales." },
+        { t: "Evaluación de madurez TI/OT", d: "Análisis sobre NIST CSF, CIS Controls v8, ISO 27001 e ISO 31000 con score por dominio." },
+        { t: "Análisis de brechas", d: "Identificación priorizada de controles faltantes o parciales en entornos IT y OT." },
         { t: "Modelado de amenazas", d: "Escenarios críticos específicos al sector y la operación del cliente." },
         { t: "Informe ejecutivo", d: "Documento orientado a directorio: hallazgos, riesgo y recomendaciones." },
         { t: "Plan de acción", d: "Roadmap priorizado por impacto/esfuerzo con horizontes definidos." }
@@ -70,26 +70,26 @@ window.SERVICE_DETAILS = {
       title_pre: "Compliance ",
       title_em: "Normativo",
       title_post: "",
-      lead: "Te llevamos a cumplimiento sostenido con normativa chilena e internacional, con evidencia trazable y preparación para auditorías.",
-      problem: "El cumplimiento no es un esfuerzo puntual: es un programa continuo. Sin un modelo operativo, cada auditoría se convierte en un sprint reactivo, con riesgos de incumplimiento, sanciones y pérdida de confianza del mercado.",
+      lead: "Acompañamos en el cumplimiento de normativas vigentes en Chile y estándares internacionales para minimizar riesgos legales y reputacionales.",
+      problem: "El cumplimiento no es un esfuerzo puntual: es un programa continuo. Sin un modelo operativo, cada auditoría se convierte en un sprint reactivo, con riesgos de sanciones regulatorias y pérdida de confianza del mercado.",
       whatYouGet: [
-        { t: "Diagnóstico de cumplimiento", d: "Estado actual frente a marcos aplicables (ISO 27001, Ley 21.663, SBIF/CMF, PCI DSS, etc.)." },
-        { t: "Diseño de controles", d: "Implementación o ajuste de los controles requeridos por cada marco." },
+        { t: "Ley Marco de Ciberseguridad N°21.663", d: "Apoyo integral para el cumplimiento de la normativa marco de ciberseguridad en Chile." },
+        { t: "Ley de Protección de Datos N°21.719", d: "Adecuación a la nueva Ley de Protección de Datos Personales y su reglamento." },
+        { t: "Normas CMF (NCG N°454 y N°510)", d: "Cumplimiento para entidades financieras reguladas por la Comisión para el Mercado Financiero." },
         { t: "Sistema de evidencia", d: "Repositorio y proceso para mantener evidencia auditable de forma continua." },
-        { t: "Preparación para auditoría", d: "Acompañamiento pre-auditoría con simulación y revisión de hallazgos." },
-        { t: "Sostenimiento", d: "Programa de mantenimiento del cumplimiento post-certificación." }
+        { t: "Preparación para auditoría", d: "Acompañamiento pre-auditoría con simulación y revisión de hallazgos." }
       ],
       process: [
-        { n: "01", t: "Diagnóstico", d: "Análisis del estado actual frente al marco objetivo." },
+        { n: "01", t: "Diagnóstico", d: "Análisis del estado actual frente al marco normativo objetivo." },
         { n: "02", t: "Plan", d: "Roadmap de cumplimiento con responsables, fechas y entregables." },
         { n: "03", t: "Implementación", d: "Diseño y despliegue de controles, políticas y procesos faltantes." },
         { n: "04", t: "Evidencia", d: "Recolección, organización y validación de evidencia auditable." },
         { n: "05", t: "Auditoría", d: "Acompañamiento durante la auditoría externa y gestión de hallazgos." }
       ],
       cases: [
-        { t: "ISO 27001 — Servicios financieros", d: "Certificación obtenida en 9 meses partiendo desde nivel inicial." },
-        { t: "Ley 21.663 — Banca", d: "Programa de cumplimiento de la Ley Marco de Ciberseguridad." },
-        { t: "PCI DSS — E-commerce", d: "Certificación PCI DSS para procesador de pagos en LATAM." }
+        { t: "Ley 21.663 — Operadores de importancia vital", d: "Programa de adecuación a la Ley Marco de Ciberseguridad con controles y evidencia." },
+        { t: "CMF — Entidad financiera regulada", d: "Cumplimiento NCG N°454 y N°510 con plan de acción priorizado." },
+        { t: "ISO 27001 — Servicios financieros", d: "Certificación obtenida en 9 meses partiendo desde nivel inicial." }
       ],
       duration: "Variable según marco",
       output: "Certificación + sostenimiento"
@@ -132,21 +132,21 @@ window.SERVICE_DETAILS = {
       title_pre: "Gestión de ",
       title_em: "Terceros",
       title_post: "",
-      lead: "Gobernamos el riesgo de proveedores y socios tecnológicos: evaluación, contratos, monitoreo y respuesta ante incidentes.",
+      lead: "Evaluamos de forma estructurada el nivel de seguridad de proveedores, contratistas y socios tecnológicos, y diseñamos un modelo de gobernanza continua.",
       problem: "El 60% de los incidentes graves involucran a un tercero. Los proveedores tienen acceso a tus datos, sistemas y operación — pero su nivel de seguridad rara vez está bajo control directo. Sin un programa de TPRM, esa exposición es invisible.",
       whatYouGet: [
-        { t: "Inventario de terceros", d: "Catálogo completo con criticidad, datos accedidos y nivel de integración." },
-        { t: "Modelo de evaluación", d: "Cuestionario tiered (alto/medio/bajo) con criterios objetivos." },
-        { t: "Cláusulas contractuales", d: "Anexos de seguridad, SLAs y derecho a auditar." },
-        { t: "Monitoreo continuo", d: "Indicadores de postura por proveedor y revisiones periódicas." },
+        { t: "Inventario y clasificación", d: "Catálogo completo de terceros con criticidad, datos accedidos y nivel de integración." },
+        { t: "Evaluación con cuestionarios", d: "Cuestionarios tiered (alto/medio/bajo) con validación técnica y tableros de riesgo (scoring)." },
+        { t: "Onboarding seguro", d: "Proceso de incorporación de nuevos proveedores con controles y cláusulas contractuales de seguridad." },
+        { t: "Gobernanza continua", d: "Modelo de monitoreo con revisiones periódicas e indicadores de postura por proveedor." },
         { t: "Plan de respuesta", d: "Procedimiento ante incidentes que involucran a terceros." }
       ],
       process: [
-        { n: "01", t: "Inventario", d: "Levantamiento del universo de terceros y clasificación inicial." },
-        { n: "02", t: "Modelo", d: "Diseño del proceso de evaluación, contratos y monitoreo." },
-        { n: "03", t: "Evaluación", d: "Aplicación a los terceros críticos identificados." },
-        { n: "04", t: "Remediación", d: "Plan de acción con cada proveedor según hallazgos." },
-        { n: "05", t: "Operación", d: "Cadencia de revisión y handoff al equipo de procurement." }
+        { n: "01", t: "Inventario", d: "Levantamiento del universo de terceros y clasificación por criticidad." },
+        { n: "02", t: "Modelo", d: "Diseño del proceso de evaluación, scoring y gobernanza continua." },
+        { n: "03", t: "Evaluación", d: "Aplicación de cuestionarios y validación técnica a los terceros críticos." },
+        { n: "04", t: "Remediación", d: "Plan de acción con cada proveedor según hallazgos y cláusulas contractuales." },
+        { n: "05", t: "Operación", d: "Cadencia de revisión, onboarding de nuevos proveedores y handoff a procurement." }
       ],
       cases: [
         { t: "Banca", d: "Programa TPRM para 200+ proveedores críticos con tiering automatizado." },
@@ -163,14 +163,14 @@ window.SERVICE_DETAILS = {
       title_pre: "Continuidad ",
       title_em: "Operacional",
       title_post: "",
-      lead: "Preparamos a tu organización para responder, recuperarse y mantener la operación durante incidentes críticos.",
+      lead: "Fortalecemos la resiliencia organizacional preparando a la empresa para responder y recuperarse ante incidentes, incluidos escenarios de ciberataques.",
       problem: "Cuando ocurre un incidente serio — ransomware, indisponibilidad masiva, fuga — la diferencia entre horas y semanas de impacto está en la preparación previa. BCP, DRP y playbooks bien diseñados son la diferencia entre crisis controlada y catástrofe operacional.",
       whatYouGet: [
-        { t: "Análisis de impacto (BIA)", d: "Identificación de procesos críticos, RTOs y RPOs realistas." },
-        { t: "Plan de continuidad (BCP)", d: "Procedimientos por escenario, roles y comunicaciones." },
-        { t: "Plan de recuperación (DRP)", d: "Procedimientos técnicos de recuperación de sistemas críticos." },
-        { t: "Playbooks de respuesta", d: "Guías paso a paso para escenarios de alta probabilidad." },
-        { t: "Simulación", d: "Ejercicios de mesa y simulación técnica con stakeholders reales." }
+        { t: "Diagnóstico de ciberresiliencia", d: "Identificación de brechas críticas en la capacidad de respuesta y recuperación ante ciberataques." },
+        { t: "Plan de continuidad (BCP)", d: "Estrategias y procedimientos por escenario de ciberataque, con roles y comunicaciones definidas." },
+        { t: "Plan de recuperación (DRP)", d: "Procedimientos técnicos de recuperación de sistemas críticos ante incidentes graves." },
+        { t: "Playbooks operativos", d: "Guías paso a paso para amenazas de alta probabilidad: ransomware, phishing y acceso no autorizado." },
+        { t: "Simulación", d: "Ejercicios de mesa y simulación técnica con stakeholders reales bajo escenarios de ciberataque." }
       ],
       process: [
         { n: "01", t: "BIA", d: "Levantamiento de procesos, dependencias y tiempos críticos." },
@@ -194,21 +194,21 @@ window.SERVICE_DETAILS = {
       title_pre: "Cultura y ",
       title_em: "Awareness",
       title_post: "",
-      lead: "Convertimos al equipo en la primera línea de defensa: capacitación medida, simulaciones realistas y campañas que cambian comportamientos.",
-      problem: "El 80% de los incidentes empieza por un click humano. La capacitación tradicional es aburrida, genérica y no se mide. Una cultura de seguridad real requiere campañas continuas, simulaciones y métricas de comportamiento — no checklists anuales.",
+      lead: "Transformamos a los empleados en la primera línea de defensa mediante programas de cultura que cambian comportamientos de forma medible.",
+      problem: "El 80% de los incidentes empieza por un click humano. La capacitación tradicional es aburrida, genérica y no se mide. Una cultura de seguridad real requiere un diagnóstico cultural, campañas continuas y métricas de comportamiento — no checklists anuales.",
       whatYouGet: [
-        { t: "Diagnóstico cultural", d: "Línea base de comportamientos y percepción de seguridad en la organización." },
-        { t: "Plan anual", d: "Calendario de campañas, simulaciones y formaciones segmentadas por audiencia." },
-        { t: "Simulaciones de phishing", d: "Campañas con escenarios realistas y métricas de click/reporte." },
-        { t: "Capacitación segmentada", d: "Contenidos específicos para directivos, técnicos, comercial, operaciones." },
-        { t: "Métricas de cultura", d: "Indicadores trazables de comportamiento y madurez cultural." }
+        { t: "Diagnóstico Cultural", d: "Evaluación de la cultura actual mediante encuestas y simulaciones para establecer línea base." },
+        { t: "Contenidos personalizados", d: "Desarrollo de materiales según el perfil de la audiencia: directivos, técnicos y usuarios finales." },
+        { t: "Campañas de phishing simulado", d: "Campañas continuas con escenarios realistas y métricas de click/reporte." },
+        { t: "Capacitaciones segmentadas", d: "Formaciones específicas por perfil con cadencia mensual o trimestral." },
+        { t: "Métricas de cultura", d: "Indicadores trazables de comportamiento y madurez cultural de la organización." }
       ],
       process: [
-        { n: "01", t: "Diagnóstico", d: "Encuestas, simulación inicial y entrevistas para línea base." },
-        { n: "02", t: "Plan", d: "Roadmap anual con objetivos, audiencias y mensajes clave." },
-        { n: "03", t: "Producción", d: "Diseño de contenidos, simulaciones y materiales gráficos." },
-        { n: "04", t: "Ejecución", d: "Campañas y simulaciones con cadencia mensual o trimestral." },
-        { n: "05", t: "Medición", d: "Reporte de KPIs, ajuste del plan y nueva línea base." }
+        { n: "01", t: "Diagnóstico Cultural", d: "Encuestas, simulación inicial y entrevistas para establecer línea base cultural." },
+        { n: "02", t: "Plan", d: "Roadmap anual con objetivos, audiencias y mensajes clave por perfil." },
+        { n: "03", t: "Producción", d: "Diseño de contenidos personalizados, simulaciones y materiales gráficos." },
+        { n: "04", t: "Ejecución", d: "Campañas y simulaciones de phishing con cadencia mensual o trimestral." },
+        { n: "05", t: "Medición", d: "Reporte de KPIs, ajuste del plan y nueva línea base cultural." }
       ],
       cases: [
         { t: "Banca", d: "Reducción del 65% en click rate de phishing en 12 meses." },
