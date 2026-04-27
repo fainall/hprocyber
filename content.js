@@ -1,4 +1,4 @@
-// H PRO CYBER — content (primary: ES; EN is a professional translation)
+// hprocyber — content (primary: ES; EN is a professional translation)
 window.CONTENT = {
   es: {
     nav: {
@@ -22,7 +22,7 @@ window.CONTENT = {
       casesTitle: "Aplicaciones reales."
     },
     hero: {
-      eyebrow: "H PRO CYBER · CIBERSEGURIDAD INTEGRAL",
+      eyebrow: "hprocyber · CIBERSEGURIDAD INTEGRAL",
       title_pre: "Protegemos tu empresa de ciberataques ",
       title_em: "antes",
       title_post: " de que ocurran.",
@@ -55,7 +55,7 @@ window.CONTENT = {
       title_pre: "No solo protegemos sistemas, protegemos tu ",
       title_em: "negocio",
       title_post: ".",
-      desc: "En H PRO CYBER integramos estrategia, tecnología y gestión para transformar la ciberseguridad en un habilitador del negocio.",
+      desc: "En hprocyber integramos estrategia, tecnología y gestión para transformar la ciberseguridad en un habilitador del negocio.",
       pillars: [
         { n: "P1", t: "Protección", d: "Implementación de controles técnicos y operativos que reducen la exposición al riesgo." },
         { n: "P2", t: "Gobierno", d: "Estructuración de roles, procesos y cumplimiento para una gestión efectiva de la seguridad." },
@@ -108,7 +108,7 @@ window.CONTENT = {
     diff: {
       eyebrow: "06 · DIFERENCIADORES",
       title_pre: "¿Por qué ",
-      title_em: "H PRO CYBER",
+      title_em: "hprocyber",
       title_post: "?",
       items: [
         { t: "Visión Integral", d: "Cubrimos toda la cadena de valor, desde la estrategia de gobierno hasta la cultura de seguridad operacional." },
@@ -122,7 +122,7 @@ window.CONTENT = {
       title_pre: "Un socio ",
       title_em: "estratégico",
       title_post: ", no un proveedor puntual.",
-      intro: "En H PRO CYBER ayudamos a las organizaciones a enfrentar los desafíos reales de la ciberseguridad mediante un enfoque que combina visión estratégica, capacidad técnica y entendimiento del negocio. Acompañamos a empresas en todas las etapas de madurez, desde la definición de gobierno hasta la implementación de controles y el desarrollo de una cultura organizacional orientada a la seguridad.",
+      intro: "En hprocyber ayudamos a las organizaciones a enfrentar los desafíos reales de la ciberseguridad mediante un enfoque que combina visión estratégica, capacidad técnica y entendimiento del negocio. Acompañamos a empresas en todas las etapas de madurez, desde la definición de gobierno hasta la implementación de controles y el desarrollo de una cultura organizacional orientada a la seguridad.",
       approachTitle: "Nuestro enfoque",
       approach: [
         { k: "Estratégico", d: "Alineamos la ciberseguridad con los objetivos del negocio y la toma de decisiones directiva." },
@@ -177,6 +177,16 @@ window.CONTENT = {
       desc: "Conoce tu nivel real de exposición y recibe un plan claro para avanzar.",
       btn: "Solicitar diagnóstico",
       btn2: "Contactar ahora",
+      formName: "Nombre",
+      formCompany: "Empresa",
+      formEmail: "Email",
+      formService: "Servicio de interés",
+      formServicePlaceholder: "Selecciona un servicio...",
+      formMessage: "Mensaje",
+      formMessagePlaceholder: "Cuéntanos sobre tu organización y qué necesitas...",
+      formSending: "Enviando...",
+      formSuccess: "Mensaje enviado. Te contactamos en menos de 24 horas hábiles.",
+      formError: "Hubo un error. Intenta de nuevo o escríbenos a contacto@hprocyber.com",
       meta: [
         { k: "Respuesta", v: "< 24 h hábiles" },
         { k: "Cobertura", v: "Chile · LATAM" },
@@ -184,14 +194,14 @@ window.CONTENT = {
       ]
     },
     foot: {
-      left: "H PRO CYBER © 2026 — Ciberseguridad integral",
+      left: "hprocyber © 2026 — Ciberseguridad integral",
       right: "SANTIAGO · CHILE"
     }
   },
   en: {
     nav: { inicio: "Home", quienes: "About", servicios: "Services", planes: "Plans", metodologia: "Methodology", contacto: "Contact", cta: "Request assessment", detailLabel: "View detail", back: "Back to home", whatYouGet: "What's included", processLabel: "Process", casesLabel: "Typical cases", durationLabel: "Typical duration", outputLabel: "Outcome", problemLabel: "The Problem", deliverablesTitle: "Service deliverables.", processTitle: "How we deliver it.", casesTitle: "Real-world applications." },
     hero: {
-      eyebrow: "H PRO CYBER · INTEGRATED CYBER DEFENSE",
+      eyebrow: "hprocyber · INTEGRATED CYBER DEFENSE",
       title_pre: "We protect your business from cyberattacks ",
       title_em: "before",
       title_post: " they happen.",
@@ -224,7 +234,7 @@ window.CONTENT = {
       title_pre: "We don't just protect systems — we protect your ",
       title_em: "business",
       title_post: ".",
-      desc: "At H PRO CYBER we integrate strategy, technology and management to turn cybersecurity into a business enabler.",
+      desc: "At hprocyber we integrate strategy, technology and management to turn cybersecurity into a business enabler.",
       pillars: [
         { n: "P1", t: "Protection", d: "Technical and operational controls that reduce risk exposure." },
         { n: "P2", t: "Governance", d: "Roles, processes and compliance for effective security management." },
@@ -277,7 +287,7 @@ window.CONTENT = {
     diff: {
       eyebrow: "06 · WHY US",
       title_pre: "Why ",
-      title_em: "H PRO CYBER",
+      title_em: "hprocyber",
       title_post: "?",
       items: [
         { t: "Integral Vision", d: "We cover the full value chain — from governance strategy to operational security culture." },
@@ -291,7 +301,7 @@ window.CONTENT = {
       title_pre: "A strategic ",
       title_em: "partner",
       title_post: ", not a point-in-time vendor.",
-      intro: "At H PRO CYBER we help organizations face the real challenges of cybersecurity through strategic vision, technical capability and business understanding. We support companies at every maturity stage — from governance definition to control implementation and the development of a security-oriented culture.",
+      intro: "At hprocyber we help organizations face the real challenges of cybersecurity through strategic vision, technical capability and business understanding. We support companies at every maturity stage — from governance definition to control implementation and the development of a security-oriented culture.",
       approachTitle: "Our approach",
       approach: [
         { k: "Strategic", d: "We align cybersecurity with business goals and executive decision-making." },
@@ -330,12 +340,22 @@ window.CONTENT = {
       desc: "Know your real exposure level and receive a clear plan to move forward.",
       btn: "Request assessment",
       btn2: "Contact us",
+      formName: "Name",
+      formCompany: "Company",
+      formEmail: "Email",
+      formService: "Service of interest",
+      formServicePlaceholder: "Select a service...",
+      formMessage: "Message",
+      formMessagePlaceholder: "Tell us about your organization and what you need...",
+      formSending: "Sending...",
+      formSuccess: "Message sent. We'll be in touch within 24 business hours.",
+      formError: "Something went wrong. Try again or email us at contacto@hprocyber.com",
       meta: [
         { k: "Response", v: "< 24 business hours" },
         { k: "Coverage", v: "Chile · LATAM" },
         { k: "Contact", v: "contacto@hprocyber.com" }
       ]
     },
-    foot: { left: "H PRO CYBER © 2026 — Integrated cyber defense", right: "SANTIAGO · CHILE" }
+    foot: { left: "hprocyber © 2026 — Integrated cyber defense", right: "SANTIAGO · CHILE" }
   }
 };

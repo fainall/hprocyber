@@ -73,8 +73,8 @@ function Nav({ lang, setLang, t, theme, setTheme }) {
       <nav className={"nav " + (scrolled ? "scrolled" : "") + (menuOpen ? " menu-open" : "")}>
         <div className="nav-inner">
           <a href="#top" className="brand" onClick={closeMenu}>
-            <img src="logo.png" alt="H PRO CYBER" className="brand-logo" />
-            <span className="brand-name">H PRO <span className="dim">CYBER</span></span>
+            <img src="logo.png" alt="hprocyber" className="brand-logo" />
+            <span className="brand-name">hprocyber</span>
           </a>
           <div className="nav-links">
             <a href="#about">{t.nav.quienes}</a>
@@ -503,31 +503,104 @@ function BigCta({ t }) {
 
 // ---------- Contact CTA ----------
 function CTA({ t }) {
-  const ctaBtn1Ref = useMagnetic(10, 70);
-  const ctaBtn2Ref = useMagnetic(8, 70);
+  const [status, setStatus] = useState("idle"); // idle | sending | ok | error
+  const [fields, setFields] = useState({ name: "", company: "", email: "", service: "", message: "" });
+
+  const set = (k) => (e) => setFields(f => ({ ...f, [k]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/XXXXXXXX", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(fields)
+      });
+      setStatus(res.ok ? "ok" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const services = [
+    "Estrategia de Gobierno",
+    "Assessment de Ciberseguridad",
+    "Compliance Normativo",
+    "Plan Director (Master Plan)",
+    "Gestión de Terceros",
+    "Continuidad Operacional",
+    "Awareness en Ciberseguridad",
+    "CISO Virtual / Advisor",
+    "Otro"
+  ];
+
   return (
     <section className="cta-section" id="contact">
       <div className="container">
         <div className="eyebrow reveal" style={{ marginBottom: "40px" }}>{t.cta.eyebrow}</div>
         <div className="cta-inner">
-          <div>
+          <div className="cta-left">
             <h2 className="cta-title reveal">
               {t.cta.title_pre}<em>{t.cta.title_em}</em>{t.cta.title_post}
             </h2>
             <p className="hero-desc reveal delay-1">{t.cta.desc}</p>
-            <div className="hero-actions reveal delay-2" style={{ marginTop: "32px" }}>
-              <a ref={ctaBtn1Ref} href="mailto:contacto@hprocyber.com" className="cta-btn primary magnetic"><span className="magnetic-inner">{t.cta.btn} <span className="arrow" /></span></a>
-              <a ref={ctaBtn2Ref} href="mailto:contacto@hprocyber.com" className="cta-btn magnetic"><span className="magnetic-inner">{t.cta.btn2} <span className="arrow" /></span></a>
+            <div className="cta-meta reveal delay-2">
+              {t.cta.meta.map((m, i) => (
+                <div key={i} className="cta-meta-row">
+                  <span className="k">{m.k}</span>
+                  <span className="v">{m.v}</span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="cta-meta">
-            {t.cta.meta.map((m, i) => (
-              <div key={i} className={`cta-meta-row reveal delay-${i}`}>
-                <span className="k">{m.k}</span>
-                <span className="v">{m.v}</span>
+
+          <form className="contact-form reveal delay-1" onSubmit={handleSubmit}>
+            {status === "ok" ? (
+              <div className="form-success">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/>
+                </svg>
+                <p>{t.cta.formSuccess || "Mensaje enviado. Te contactamos pronto."}</p>
               </div>
-            ))}
-          </div>
+            ) : (
+              <>
+                <div className="form-row">
+                  <div className="form-field">
+                    <label>{t.cta.formName || "Nombre"}</label>
+                    <input type="text" required value={fields.name} onChange={set("name")} placeholder="Juan Pérez" />
+                  </div>
+                  <div className="form-field">
+                    <label>{t.cta.formCompany || "Empresa"}</label>
+                    <input type="text" value={fields.company} onChange={set("company")} placeholder="Acme Corp" />
+                  </div>
+                </div>
+                <div className="form-field">
+                  <label>{t.cta.formEmail || "Email"}</label>
+                  <input type="email" required value={fields.email} onChange={set("email")} placeholder="juan@empresa.com" />
+                </div>
+                <div className="form-field">
+                  <label>{t.cta.formService || "Servicio de interés"}</label>
+                  <select value={fields.service} onChange={set("service")}>
+                    <option value="">{t.cta.formServicePlaceholder || "Selecciona un servicio..."}</option>
+                    {services.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label>{t.cta.formMessage || "Mensaje"}</label>
+                  <textarea rows="4" value={fields.message} onChange={set("message")} placeholder={t.cta.formMessagePlaceholder || "Cuéntanos sobre tu organización y qué necesitas..."} />
+                </div>
+                {status === "error" && (
+                  <p className="form-error">{t.cta.formError || "Hubo un error. Intenta de nuevo o escríbenos directamente."}</p>
+                )}
+                <button type="submit" className="cta-btn primary form-submit" disabled={status === "sending"}>
+                  {status === "sending"
+                    ? (t.cta.formSending || "Enviando...")
+                    : (t.cta.btn + " →")}
+                </button>
+              </>
+            )}
+          </form>
         </div>
       </div>
     </section>
@@ -720,8 +793,8 @@ function App() {
 
   return (
     <React.Fragment>
+      <Nav lang={lang} setLang={setLang} t={t} theme={tweaks.theme} setTheme={setTheme} />
       <div className={`page ${transClass}`}>
-        <Nav lang={lang} setLang={setLang} t={t} theme={tweaks.theme} setTheme={setTheme} />
         <Hero t={t} scrollProgress={scrollProgress} />
       <Ticker items={t.ticker} />
       <Problem t={t} />
