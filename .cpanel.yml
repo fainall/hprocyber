@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/mantecio/public_html/h2/
+    - /bin/cp -r . $DEPLOYPATH
