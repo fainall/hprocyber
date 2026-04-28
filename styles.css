@@ -897,7 +897,9 @@ footer {
   .cta-section { padding: 80px 0 60px; }
 
   .nav-links { display: none; }
-  .nav-inner { padding: 14px var(--gutter); }
+  .nav-inner { padding: 10px var(--gutter); }
+  .brand-logo { height: 52px; }
+  .brand-name { display: none; }
 
   .hero { padding-top: 90px; min-height: 100svh; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
