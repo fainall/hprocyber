@@ -74,7 +74,6 @@ function Nav({ lang, setLang, t, theme, setTheme }) {
         <div className="nav-inner">
           <a href="#top" className="brand" onClick={closeMenu}>
             <img src="logo.png" alt="hprocyber" className="brand-logo" />
-            <span className="brand-name">hprocyber</span>
           </a>
           <div className="nav-links">
             <a href="#about">{t.nav.quienes}</a>
