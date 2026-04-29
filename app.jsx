@@ -728,130 +728,6 @@ function ServiceDetail({ slug, lang, t, theme, setTheme, setLang }) {
   );
 }
 
-// ---------- Neon Zigzag Lines ----------
-function ElectricParticles() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    let animId, w, h;
-    let lines = [];
-    let globalOpacity = 0;
-
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-
-    function getAccent() {
-      const tmp = document.createElement('div');
-      tmp.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-      document.body.appendChild(tmp);
-      const rgb = getComputedStyle(tmp).color;
-      document.body.removeChild(tmp);
-      return rgb || 'rgb(0,220,200)';
-    }
-
-    function makeLine() {
-      const horiz = Math.random() > 0.35;
-      const pts = [];
-      if (horiz) {
-        const startY = h * 0.05 + Math.random() * h * 0.9;
-        const segs = 7 + Math.floor(Math.random() * 7);
-        pts.push([0, startY]);
-        for (let i = 1; i <= segs; i++) {
-          const x = (i / segs) * w;
-          const prev = pts[pts.length - 1][1];
-          const jump = h * 0.08 + Math.random() * h * 0.12;
-          const y = Math.max(0, Math.min(h, prev + (Math.random() > 0.5 ? jump : -jump)));
-          pts.push([x, y]);
-        }
-      } else {
-        const startX = w * 0.05 + Math.random() * w * 0.9;
-        const segs = 7 + Math.floor(Math.random() * 7);
-        pts.push([startX, 0]);
-        for (let i = 1; i <= segs; i++) {
-          const y = (i / segs) * h;
-          const prev = pts[pts.length - 1][0];
-          const jump = w * 0.08 + Math.random() * w * 0.1;
-          const x = Math.max(0, Math.min(w, prev + (Math.random() > 0.5 ? jump : -jump)));
-          pts.push([x, y]);
-        }
-      }
-      return {
-        pts,
-        life: 0,
-        speed: 0.0018 + Math.random() * 0.002,
-        maxA: 0.12 + Math.random() * 0.13,
-      };
-    }
-
-    function drawLine(line, accent) {
-      const { life, maxA, pts } = line;
-      let a = life < 0.25 ? (life / 0.25) * maxA
-             : life > 0.7  ? ((1 - life) / 0.3) * maxA
-             : maxA;
-      a *= globalOpacity;
-      if (a <= 0.005 || pts.length < 2) return;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(pts[0][0], pts[0][1]);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-
-      // outer glow
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = accent;
-      ctx.strokeStyle = accent;
-      ctx.lineWidth = 1.8;
-      ctx.globalAlpha = a * 0.35;
-      ctx.stroke();
-
-      // inner core
-      ctx.shadowBlur = 6;
-      ctx.lineWidth = 0.6;
-      ctx.globalAlpha = a;
-      ctx.stroke();
-
-      ctx.restore();
-    }
-
-    function onScroll() {
-      const heroH = window.innerHeight;
-      globalOpacity = Math.max(0, Math.min(1, (window.scrollY - heroH * 0.5) / (heroH * 0.4)));
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    let accent = 'rgb(0,220,200)';
-    let accentTick = 0;
-
-    // seed a few lines at different life stages
-    for (let i = 0; i < 5; i++) { const l = makeLine(); l.life = Math.random() * 0.9; lines.push(l); }
-
-    function draw() {
-      animId = requestAnimationFrame(draw);
-      ctx.clearRect(0, 0, w, h);
-      if (globalOpacity === 0) return;
-
-      if (++accentTick % 200 === 0) accent = getAccent();
-
-      lines = lines.filter(l => l.life < 1);
-      while (lines.length < 5) lines.push(makeLine());
-
-      lines.forEach(l => { l.life += l.speed; drawLine(l, accent); });
-    }
-
-    resize(); draw();
-    window.addEventListener('resize', () => { resize(); lines = []; for (let i = 0; i < 5; i++) { const l = makeLine(); l.life = Math.random() * 0.9; lines.push(l); } });
-    return () => { cancelAnimationFrame(animId); window.removeEventListener('scroll', onScroll); };
-  }, []);
-
-  return (
-    <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none' }} />
-  );
-}
 
 // ---------- Back to top ----------
 function WhatsAppButton() {
@@ -958,7 +834,6 @@ function App() {
       <Footer t={t} />
       </div>
 
-      <ElectricParticles />
       <WhatsAppButton />
       <BackToTop />
       <TweaksPanel title="Tweaks">

@@ -1305,8 +1305,6 @@ footer {
 
 /* Page transition — fade + small slide on route change */
 .page {
-  position: relative;
-  z-index: 2;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
