@@ -728,7 +728,7 @@ function ServiceDetail({ slug, lang, t, theme, setTheme, setLang }) {
   );
 }
 
-// ---------- Electric Particles ----------
+// ---------- Neon Zigzag Lines ----------
 function ElectricParticles() {
   const canvasRef = useRef(null);
 
@@ -736,27 +736,12 @@ function ElectricParticles() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animId, w, h;
-    let particles = [];
-    let opacity = 0;
-    const COUNT = 55;
-    const MAX_DIST = 160;
-    const SEGS = 7;
+    let lines = [];
+    let globalOpacity = 0;
 
     function resize() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-    }
-
-    function init() {
-      particles = Array.from({ length: COUNT }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22,
-        r: Math.random() * 1.4 + 0.4,
-        t: Math.random() * Math.PI * 2,
-        ts: 0.015 + Math.random() * 0.025,
-      }));
     }
 
     function getAccent() {
@@ -765,94 +750,106 @@ function ElectricParticles() {
       document.body.appendChild(tmp);
       const rgb = getComputedStyle(tmp).color;
       document.body.removeChild(tmp);
-      return rgb || 'rgb(0,229,210)';
+      return rgb || 'rgb(0,220,200)';
     }
 
-    function zigzag(x1, y1, x2, y2, alpha) {
-      const dx = x2 - x1, dy = y2 - y1;
-      const len = Math.sqrt(dx * dx + dy * dy);
-      if (len < 1) return;
-      const nx = -dy / len, ny = dx / len;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      for (let i = 1; i < SEGS; i++) {
-        const t = i / SEGS;
-        const amp = (Math.random() - 0.5) * len * 0.12;
-        ctx.lineTo(x1 + dx * t + nx * amp, y1 + dy * t + ny * amp);
+    function makeLine() {
+      const horiz = Math.random() > 0.35;
+      const pts = [];
+      if (horiz) {
+        const startY = h * 0.05 + Math.random() * h * 0.9;
+        const segs = 7 + Math.floor(Math.random() * 7);
+        pts.push([0, startY]);
+        for (let i = 1; i <= segs; i++) {
+          const x = (i / segs) * w;
+          const prev = pts[pts.length - 1][1];
+          const jump = h * 0.08 + Math.random() * h * 0.12;
+          const y = Math.max(0, Math.min(h, prev + (Math.random() > 0.5 ? jump : -jump)));
+          pts.push([x, y]);
+        }
+      } else {
+        const startX = w * 0.05 + Math.random() * w * 0.9;
+        const segs = 7 + Math.floor(Math.random() * 7);
+        pts.push([startX, 0]);
+        for (let i = 1; i <= segs; i++) {
+          const y = (i / segs) * h;
+          const prev = pts[pts.length - 1][0];
+          const jump = w * 0.08 + Math.random() * w * 0.1;
+          const x = Math.max(0, Math.min(w, prev + (Math.random() > 0.5 ? jump : -jump)));
+          pts.push([x, y]);
+        }
       }
-      ctx.lineTo(x2, y2);
-      ctx.globalAlpha = alpha;
-      ctx.stroke();
+      return {
+        pts,
+        life: 0,
+        speed: 0.0018 + Math.random() * 0.002,
+        maxA: 0.12 + Math.random() * 0.13,
+      };
     }
 
-    let accent = 'rgb(0,229,210)';
-    let accentTimer = 0;
+    function drawLine(line, accent) {
+      const { life, maxA, pts } = line;
+      let a = life < 0.25 ? (life / 0.25) * maxA
+             : life > 0.7  ? ((1 - life) / 0.3) * maxA
+             : maxA;
+      a *= globalOpacity;
+      if (a <= 0.005 || pts.length < 2) return;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+
+      // outer glow
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = accent;
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = 1.8;
+      ctx.globalAlpha = a * 0.35;
+      ctx.stroke();
+
+      // inner core
+      ctx.shadowBlur = 6;
+      ctx.lineWidth = 0.6;
+      ctx.globalAlpha = a;
+      ctx.stroke();
+
+      ctx.restore();
+    }
 
     function onScroll() {
       const heroH = window.innerHeight;
-      opacity = Math.max(0, Math.min(1, (window.scrollY - heroH * 0.55) / (heroH * 0.35)));
+      globalOpacity = Math.max(0, Math.min(1, (window.scrollY - heroH * 0.5) / (heroH * 0.4)));
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    let accent = 'rgb(0,220,200)';
+    let accentTick = 0;
+
+    // seed a few lines at different life stages
+    for (let i = 0; i < 5; i++) { const l = makeLine(); l.life = Math.random() * 0.9; lines.push(l); }
+
     function draw() {
       animId = requestAnimationFrame(draw);
-      if (opacity === 0) { ctx.clearRect(0, 0, w, h); return; }
-
-      accentTimer++;
-      if (accentTimer % 120 === 0) accent = getAccent();
-
       ctx.clearRect(0, 0, w, h);
+      if (globalOpacity === 0) return;
 
-      // update
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy; p.t += p.ts;
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-      });
+      if (++accentTick % 200 === 0) accent = getAccent();
 
-      ctx.strokeStyle = accent;
-      ctx.lineWidth = 0.6;
+      lines = lines.filter(l => l.life < 1);
+      while (lines.length < 5) lines.push(makeLine());
 
-      // zigzag connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i], b = particles[j];
-          const dx = b.x - a.x, dy = b.y - a.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MAX_DIST) {
-            const str = (1 - dist / MAX_DIST);
-            zigzag(a.x, a.y, b.x, b.y, str * 0.18 * opacity);
-          }
-        }
-      }
-
-      // particles
-      ctx.fillStyle = accent;
-      particles.forEach(p => {
-        const flicker = 0.45 + 0.55 * Math.abs(Math.sin(p.t));
-        ctx.globalAlpha = flicker * 0.55 * opacity;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.globalAlpha = 1;
+      lines.forEach(l => { l.life += l.speed; drawLine(l, accent); });
     }
 
-    resize(); init(); draw();
-    window.addEventListener('resize', () => { resize(); init(); });
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('scroll', onScroll);
-    };
+    resize(); draw();
+    window.addEventListener('resize', () => { resize(); lines = []; for (let i = 0; i < 5; i++) { const l = makeLine(); l.life = Math.random() * 0.9; lines.push(l); } });
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('scroll', onScroll); };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none' }}
-    />
+    <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none' }} />
   );
 }
 
