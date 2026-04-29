@@ -1179,53 +1179,106 @@ footer {
   .mobile-menu-footer .lang-toggle { display: none; }
 }
 
-/* ---------- Image Strip ---------- */
-.img-strip {
+/* ---------- Integrated section images ---------- */
+
+/* Shared image panel (used in Problem and About) */
+.section-img-panel {
   position: relative;
-  width: 100%;
-  height: 340px;
+  flex: 0 0 38%;
+  border-radius: 4px;
   overflow: hidden;
+  min-height: 420px;
 }
-.img-strip-img {
+.section-img-panel--tall { min-height: 560px; }
+.section-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(1.06);
+  transform: scale(1.04);
   transition: transform 8s ease;
 }
-.img-strip:hover .img-strip-img {
-  transform: scale(1.0);
-}
-.img-strip--left .img-strip-img  { object-position: center left; }
-.img-strip--right .img-strip-img { object-position: center right; }
-.img-strip-overlay {
+.section-img-panel:hover .section-img { transform: scale(1.0); }
+.section-img-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to right,
-    color-mix(in oklab, var(--bg) 80%, transparent) 0%,
-    color-mix(in oklab, var(--bg) 50%, transparent) 40%,
-    color-mix(in oklab, var(--bg) 65%, transparent) 100%
+    135deg,
+    color-mix(in oklab, var(--bg) 55%, transparent) 0%,
+    color-mix(in oklab, var(--bg) 20%, transparent) 60%,
+    color-mix(in oklab, var(--bg) 40%, transparent) 100%
   );
 }
-.img-strip-label {
+.section-img-label {
   position: absolute;
-  bottom: 28px;
-  left: var(--gutter);
+  bottom: 20px; right: 20px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.22em;
   color: var(--fg-dim);
   text-transform: uppercase;
-  opacity: 0.6;
+  opacity: 0.5;
 }
-.img-strip.reveal { opacity: 0; transform: none; }
-.img-strip.reveal.in { opacity: 1; transition: opacity 1s ease; }
 
-@media (max-width: 640px) {
-  .img-strip { height: 200px; }
+/* Problem split layout */
+.problem-split {
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+.problem-split-content { flex: 1; min-width: 0; }
+
+/* About split layout */
+.about-split {
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+.about-split-content { flex: 1; min-width: 0; }
+
+/* Value section background image */
+.value-section {
+  position: relative;
+  overflow: hidden;
+}
+.value-bg-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.value-bg-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0.18;
+}
+.value-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    transparent 30%,
+    transparent 70%,
+    var(--bg) 100%
+  );
+}
+
+/* Mobile: stack image below content */
+@media (max-width: 900px) {
+  .problem-split,
+  .about-split {
+    flex-direction: column;
+  }
+  .section-img-panel,
+  .section-img-panel--tall {
+    flex: none;
+    width: 100%;
+    min-height: 220px;
+  }
 }
 
 /* ---------- Back to top ---------- */

@@ -207,23 +207,37 @@ function Problem({ t }) {
   return (
     <section id="problem" className="problem">
       <div className="container">
-        <div className="section-head">
-          <div className="eyebrow reveal">{t.problem.eyebrow}</div>
-          <div>
-            <h2 className="section-title reveal">
-              {t.problem.title_pre}<em>{t.problem.title_em}</em>{t.problem.title_post}
-            </h2>
-            <p className="reveal delay-1">{t.problem.desc}</p>
-          </div>
-        </div>
-        <div className="problem-grid">
-          {t.problem.items.map((item, i) => (
-            <div key={i} className={`problem-item reveal delay-${i}`}>
-              <div className="k">{item.k}</div>
-              <div className="t">{item.t}</div>
-              <div className="d">{item.d}</div>
+        <div className="problem-split">
+          <div className="problem-split-content">
+            <div className="section-head">
+              <div className="eyebrow reveal">{t.problem.eyebrow}</div>
+              <div>
+                <h2 className="section-title reveal">
+                  {t.problem.title_pre}<em>{t.problem.title_em}</em>{t.problem.title_post}
+                </h2>
+                <p className="reveal delay-1">{t.problem.desc}</p>
+              </div>
             </div>
-          ))}
+            <div className="problem-grid">
+              {t.problem.items.map((item, i) => (
+                <div key={i} className={`problem-item reveal delay-${i}`}>
+                  <div className="k">{item.k}</div>
+                  <div className="t">{item.t}</div>
+                  <div className="d">{item.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="section-img-panel reveal">
+            <img
+              src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&q=80&auto=format&fit=crop"}
+              alt="Threat landscape"
+              className="section-img"
+              loading="lazy"
+            />
+            <div className="section-img-overlay" />
+            <span className="section-img-label">THREAT LANDSCAPE</span>
+          </div>
         </div>
       </div>
     </section>
@@ -233,8 +247,16 @@ function Problem({ t }) {
 // ---------- Value Proposition ----------
 function Value({ t }) {
   return (
-    <section id="value">
-      <div className="container">
+    <section id="value" className="value-section">
+      <div className="value-bg-img">
+        <img
+          src={"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=80&auto=format&fit=crop"}
+          alt="Cyber operations"
+          loading="lazy"
+        />
+        <div className="value-bg-overlay" />
+      </div>
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="section-head">
           <div className="eyebrow reveal">{t.value.eyebrow}</div>
           <div>
@@ -409,31 +431,45 @@ function About({ t }) {
   return (
     <section id="about" className="about">
       <div className="container">
-        <div className="section-head">
-          <div className="eyebrow reveal">{t.about.eyebrow}</div>
-          <div>
-            <h2 className="section-title reveal">
-              {t.about.title_pre}<em>{t.about.title_em}</em>{t.about.title_post}
-            </h2>
+        <div className="about-split">
+          <div className="about-split-content">
+            <div className="section-head">
+              <div className="eyebrow reveal">{t.about.eyebrow}</div>
+              <div>
+                <h2 className="section-title reveal">
+                  {t.about.title_pre}<em>{t.about.title_em}</em>{t.about.title_post}
+                </h2>
+              </div>
+            </div>
+            <p className="about-intro reveal">{t.about.intro}</p>
+            <div className="eyebrow reveal" style={{ marginBottom: "24px" }}>{t.about.approachTitle}</div>
+            <div className="about-approach">
+              {t.about.approach.map((a, i) => (
+                <div key={i} className={`about-card reveal delay-${i}`}>
+                  <div className="k">{a.k}</div>
+                  <div className="d">{a.d}</div>
+                </div>
+              ))}
+            </div>
+            <div className="about-mv">
+              {t.about.mv.map((m, i) => (
+                <div key={i} className={`mv-item reveal delay-${i}`}>
+                  <div className="mv-k">{m.k}</div>
+                  <div className="mv-v serif">{m.v}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <p className="about-intro reveal">{t.about.intro}</p>
-        <div className="eyebrow reveal" style={{ marginBottom: "24px" }}>{t.about.approachTitle}</div>
-        <div className="about-approach">
-          {t.about.approach.map((a, i) => (
-            <div key={i} className={`about-card reveal delay-${i}`}>
-              <div className="k">{a.k}</div>
-              <div className="d">{a.d}</div>
-            </div>
-          ))}
-        </div>
-        <div className="about-mv">
-          {t.about.mv.map((m, i) => (
-            <div key={i} className={`mv-item reveal delay-${i}`}>
-              <div className="mv-k">{m.k}</div>
-              <div className="mv-v serif">{m.v}</div>
-            </div>
-          ))}
+          <div className="section-img-panel section-img-panel--tall reveal">
+            <img
+              src={"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&auto=format&fit=crop"}
+              alt="Infrastructure"
+              className="section-img"
+              loading="lazy"
+            />
+            <div className="section-img-overlay" />
+            <span className="section-img-label">INFRASTRUCTURE</span>
+          </div>
         </div>
       </div>
     </section>
@@ -712,17 +748,6 @@ function ServiceDetail({ slug, lang, t, theme, setTheme, setLang }) {
   );
 }
 
-// ---------- Image Strip ----------
-function ImgStrip({ src, label, side = "center" }) {
-  return (
-    <div className={`img-strip reveal img-strip--${side}`}>
-      <img src={src} alt={label} className="img-strip-img" loading="lazy" />
-      <div className="img-strip-overlay" />
-      {label && <span className="img-strip-label">{label}</span>}
-    </div>
-  );
-}
-
 // ---------- Back to top ----------
 function WhatsAppButton() {
   return (
@@ -816,26 +841,11 @@ function App() {
         <Hero t={t} scrollProgress={scrollProgress} />
       <Ticker items={t.ticker} />
       <Problem t={t} />
-      <ImgStrip
-        src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&q=80&auto=format&fit=crop"}
-        label="THREAT LANDSCAPE"
-        side="left"
-      />
       <Value t={t} />
       <Services t={t} />
-      <ImgStrip
-        src={"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=80&auto=format&fit=crop"}
-        label="CYBER OPERATIONS"
-        side="right"
-      />
       <Advisor t={t} />
       <Methodology t={t} />
       <Diff t={t} />
-      <ImgStrip
-        src={"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80&auto=format&fit=crop"}
-        label="INFRASTRUCTURE"
-        side="center"
-      />
       <About t={t} />
       <Plans t={t} />
       <BigCta t={t} />
