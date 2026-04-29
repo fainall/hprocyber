@@ -817,14 +817,14 @@ function App() {
       <Ticker items={t.ticker} />
       <Problem t={t} />
       <ImgStrip
-        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&q=80&auto=format&fit=crop"
+        src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&q=80&auto=format&fit=crop"}
         label="THREAT LANDSCAPE"
         side="left"
       />
       <Value t={t} />
       <Services t={t} />
       <ImgStrip
-        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=80&auto=format&fit=crop"
+        src={"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=80&auto=format&fit=crop"}
         label="CYBER OPERATIONS"
         side="right"
       />
@@ -832,7 +832,7 @@ function App() {
       <Methodology t={t} />
       <Diff t={t} />
       <ImgStrip
-        src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80&auto=format&fit=crop"
+        src={"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80&auto=format&fit=crop"}
         label="INFRASTRUCTURE"
         side="center"
       />
