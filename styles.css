@@ -1179,6 +1179,55 @@ footer {
   .mobile-menu-footer .lang-toggle { display: none; }
 }
 
+/* ---------- Image Strip ---------- */
+.img-strip {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+}
+.img-strip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1.06);
+  transition: transform 8s ease;
+}
+.img-strip:hover .img-strip-img {
+  transform: scale(1.0);
+}
+.img-strip--left .img-strip-img  { object-position: center left; }
+.img-strip--right .img-strip-img { object-position: center right; }
+.img-strip-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--bg) 80%, transparent) 0%,
+    color-mix(in oklab, var(--bg) 50%, transparent) 40%,
+    color-mix(in oklab, var(--bg) 65%, transparent) 100%
+  );
+}
+.img-strip-label {
+  position: absolute;
+  bottom: 28px;
+  left: var(--gutter);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.img-strip.reveal { opacity: 0; transform: none; }
+.img-strip.reveal.in { opacity: 1; transition: opacity 1s ease; }
+
+@media (max-width: 640px) {
+  .img-strip { height: 200px; }
+}
+
 /* ---------- Back to top ---------- */
 .whatsapp-btn {
   position: fixed;
