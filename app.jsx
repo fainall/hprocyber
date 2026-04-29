@@ -205,16 +205,8 @@ function Ticker({ items }) {
 // ---------- Problem ----------
 function Problem({ t }) {
   return (
-    <section id="problem" className="problem section-with-bg">
-      <div className="section-bg-img">
-        <img
-          src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&q=80&auto=format&fit=crop"}
-          alt="Threat landscape"
-          loading="lazy"
-        />
-        <div className="section-bg-overlay" />
-      </div>
-      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+    <section id="problem" className="problem">
+      <div className="container">
         <div className="section-head">
           <div className="eyebrow reveal">{t.problem.eyebrow}</div>
           <div>
