@@ -728,6 +728,134 @@ function ServiceDetail({ slug, lang, t, theme, setTheme, setLang }) {
   );
 }
 
+// ---------- Electric Particles ----------
+function ElectricParticles() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animId, w, h;
+    let particles = [];
+    let opacity = 0;
+    const COUNT = 55;
+    const MAX_DIST = 160;
+    const SEGS = 7;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function init() {
+      particles = Array.from({ length: COUNT }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        r: Math.random() * 1.4 + 0.4,
+        t: Math.random() * Math.PI * 2,
+        ts: 0.015 + Math.random() * 0.025,
+      }));
+    }
+
+    function getAccent() {
+      const tmp = document.createElement('div');
+      tmp.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      document.body.appendChild(tmp);
+      const rgb = getComputedStyle(tmp).color;
+      document.body.removeChild(tmp);
+      return rgb || 'rgb(0,229,210)';
+    }
+
+    function zigzag(x1, y1, x2, y2, alpha) {
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      if (len < 1) return;
+      const nx = -dy / len, ny = dx / len;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      for (let i = 1; i < SEGS; i++) {
+        const t = i / SEGS;
+        const amp = (Math.random() - 0.5) * len * 0.12;
+        ctx.lineTo(x1 + dx * t + nx * amp, y1 + dy * t + ny * amp);
+      }
+      ctx.lineTo(x2, y2);
+      ctx.globalAlpha = alpha;
+      ctx.stroke();
+    }
+
+    let accent = 'rgb(0,229,210)';
+    let accentTimer = 0;
+
+    function onScroll() {
+      const heroH = window.innerHeight;
+      opacity = Math.max(0, Math.min(1, (window.scrollY - heroH * 0.55) / (heroH * 0.35)));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function draw() {
+      animId = requestAnimationFrame(draw);
+      if (opacity === 0) { ctx.clearRect(0, 0, w, h); return; }
+
+      accentTimer++;
+      if (accentTimer % 120 === 0) accent = getAccent();
+
+      ctx.clearRect(0, 0, w, h);
+
+      // update
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.t += p.ts;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      });
+
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = 0.6;
+
+      // zigzag connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = b.x - a.x, dy = b.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) {
+            const str = (1 - dist / MAX_DIST);
+            zigzag(a.x, a.y, b.x, b.y, str * 0.18 * opacity);
+          }
+        }
+      }
+
+      // particles
+      ctx.fillStyle = accent;
+      particles.forEach(p => {
+        const flicker = 0.45 + 0.55 * Math.abs(Math.sin(p.t));
+        ctx.globalAlpha = flicker * 0.55 * opacity;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+    }
+
+    resize(); init(); draw();
+    window.addEventListener('resize', () => { resize(); init(); });
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none' }}
+    />
+  );
+}
+
 // ---------- Back to top ----------
 function WhatsAppButton() {
   return (
@@ -833,6 +961,7 @@ function App() {
       <Footer t={t} />
       </div>
 
+      <ElectricParticles />
       <WhatsAppButton />
       <BackToTop />
       <TweaksPanel title="Tweaks">
