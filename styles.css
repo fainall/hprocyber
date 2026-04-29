@@ -1179,65 +1179,37 @@ footer {
   .mobile-menu-footer .lang-toggle { display: none; }
 }
 
-/* ---------- Integrated section images ---------- */
-
-/* Shared image panel (used in Problem and About) */
-.section-img-panel {
+/* ---------- Section background images ---------- */
+.section-with-bg {
   position: relative;
-  flex: 0 0 38%;
-  border-radius: 4px;
   overflow: hidden;
-  min-height: 420px;
 }
-.section-img-panel--tall { min-height: 560px; }
-.section-img {
+.section-bg-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.section-bg-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(1.04);
-  transition: transform 8s ease;
+  opacity: 0.15;
 }
-.section-img-panel:hover .section-img { transform: scale(1.0); }
-.section-img-overlay {
+.section-bg-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--bg) 55%, transparent) 0%,
-    color-mix(in oklab, var(--bg) 20%, transparent) 60%,
-    color-mix(in oklab, var(--bg) 40%, transparent) 100%
+    to bottom,
+    var(--bg) 0%,
+    transparent 25%,
+    transparent 75%,
+    var(--bg) 100%
   );
 }
-.section-img-label {
-  position: absolute;
-  bottom: 20px; right: 20px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  color: var(--fg-dim);
-  text-transform: uppercase;
-  opacity: 0.5;
-}
 
-/* Problem split layout */
-.problem-split {
-  display: flex;
-  gap: 56px;
-  align-items: flex-start;
-}
-.problem-split-content { flex: 1; min-width: 0; }
-
-/* About split layout */
-.about-split {
-  display: flex;
-  gap: 56px;
-  align-items: flex-start;
-}
-.about-split-content { flex: 1; min-width: 0; }
-
-/* Value section background image */
+/* Value section reuses same pattern */
 .value-section {
   position: relative;
   overflow: hidden;
@@ -1253,7 +1225,7 @@ footer {
   object-fit: cover;
   object-position: center;
   display: block;
-  opacity: 0.18;
+  opacity: 0.15;
 }
 .value-bg-overlay {
   position: absolute;
@@ -1261,24 +1233,10 @@ footer {
   background: linear-gradient(
     to bottom,
     var(--bg) 0%,
-    transparent 30%,
-    transparent 70%,
+    transparent 25%,
+    transparent 75%,
     var(--bg) 100%
   );
-}
-
-/* Mobile: stack image below content */
-@media (max-width: 900px) {
-  .problem-split,
-  .about-split {
-    flex-direction: column;
-  }
-  .section-img-panel,
-  .section-img-panel--tall {
-    flex: none;
-    width: 100%;
-    min-height: 220px;
-  }
 }
 
 /* ---------- Back to top ---------- */

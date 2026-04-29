@@ -205,39 +205,33 @@ function Ticker({ items }) {
 // ---------- Problem ----------
 function Problem({ t }) {
   return (
-    <section id="problem" className="problem">
-      <div className="container">
-        <div className="problem-split">
-          <div className="problem-split-content">
-            <div className="section-head">
-              <div className="eyebrow reveal">{t.problem.eyebrow}</div>
-              <div>
-                <h2 className="section-title reveal">
-                  {t.problem.title_pre}<em>{t.problem.title_em}</em>{t.problem.title_post}
-                </h2>
-                <p className="reveal delay-1">{t.problem.desc}</p>
-              </div>
-            </div>
-            <div className="problem-grid">
-              {t.problem.items.map((item, i) => (
-                <div key={i} className={`problem-item reveal delay-${i}`}>
-                  <div className="k">{item.k}</div>
-                  <div className="t">{item.t}</div>
-                  <div className="d">{item.d}</div>
-                </div>
-              ))}
-            </div>
+    <section id="problem" className="problem section-with-bg">
+      <div className="section-bg-img">
+        <img
+          src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&q=80&auto=format&fit=crop"}
+          alt="Threat landscape"
+          loading="lazy"
+        />
+        <div className="section-bg-overlay" />
+      </div>
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="section-head">
+          <div className="eyebrow reveal">{t.problem.eyebrow}</div>
+          <div>
+            <h2 className="section-title reveal">
+              {t.problem.title_pre}<em>{t.problem.title_em}</em>{t.problem.title_post}
+            </h2>
+            <p className="reveal delay-1">{t.problem.desc}</p>
           </div>
-          <div className="section-img-panel reveal">
-            <img
-              src={"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900&q=80&auto=format&fit=crop"}
-              alt="Threat landscape"
-              className="section-img"
-              loading="lazy"
-            />
-            <div className="section-img-overlay" />
-            <span className="section-img-label">THREAT LANDSCAPE</span>
-          </div>
+        </div>
+        <div className="problem-grid">
+          {t.problem.items.map((item, i) => (
+            <div key={i} className={`problem-item reveal delay-${i}`}>
+              <div className="k">{item.k}</div>
+              <div className="t">{item.t}</div>
+              <div className="d">{item.d}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -429,47 +423,41 @@ function Diff({ t }) {
 // ---------- About ----------
 function About({ t }) {
   return (
-    <section id="about" className="about">
-      <div className="container">
-        <div className="about-split">
-          <div className="about-split-content">
-            <div className="section-head">
-              <div className="eyebrow reveal">{t.about.eyebrow}</div>
-              <div>
-                <h2 className="section-title reveal">
-                  {t.about.title_pre}<em>{t.about.title_em}</em>{t.about.title_post}
-                </h2>
-              </div>
-            </div>
-            <p className="about-intro reveal">{t.about.intro}</p>
-            <div className="eyebrow reveal" style={{ marginBottom: "24px" }}>{t.about.approachTitle}</div>
-            <div className="about-approach">
-              {t.about.approach.map((a, i) => (
-                <div key={i} className={`about-card reveal delay-${i}`}>
-                  <div className="k">{a.k}</div>
-                  <div className="d">{a.d}</div>
-                </div>
-              ))}
-            </div>
-            <div className="about-mv">
-              {t.about.mv.map((m, i) => (
-                <div key={i} className={`mv-item reveal delay-${i}`}>
-                  <div className="mv-k">{m.k}</div>
-                  <div className="mv-v serif">{m.v}</div>
-                </div>
-              ))}
-            </div>
+    <section id="about" className="about section-with-bg">
+      <div className="section-bg-img">
+        <img
+          src={"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80&auto=format&fit=crop"}
+          alt="Infrastructure"
+          loading="lazy"
+        />
+        <div className="section-bg-overlay" />
+      </div>
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="section-head">
+          <div className="eyebrow reveal">{t.about.eyebrow}</div>
+          <div>
+            <h2 className="section-title reveal">
+              {t.about.title_pre}<em>{t.about.title_em}</em>{t.about.title_post}
+            </h2>
           </div>
-          <div className="section-img-panel section-img-panel--tall reveal">
-            <img
-              src={"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&auto=format&fit=crop"}
-              alt="Infrastructure"
-              className="section-img"
-              loading="lazy"
-            />
-            <div className="section-img-overlay" />
-            <span className="section-img-label">INFRASTRUCTURE</span>
-          </div>
+        </div>
+        <p className="about-intro reveal">{t.about.intro}</p>
+        <div className="eyebrow reveal" style={{ marginBottom: "24px" }}>{t.about.approachTitle}</div>
+        <div className="about-approach">
+          {t.about.approach.map((a, i) => (
+            <div key={i} className={`about-card reveal delay-${i}`}>
+              <div className="k">{a.k}</div>
+              <div className="d">{a.d}</div>
+            </div>
+          ))}
+        </div>
+        <div className="about-mv">
+          {t.about.mv.map((m, i) => (
+            <div key={i} className={`mv-item reveal delay-${i}`}>
+              <div className="mv-k">{m.k}</div>
+              <div className="mv-v serif">{m.v}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
