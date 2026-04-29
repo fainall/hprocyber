@@ -1182,7 +1182,7 @@ footer {
 /* ---------- Back to top ---------- */
 .whatsapp-btn {
   position: fixed;
-  bottom: 32px; left: 32px;
+  bottom: 32px; right: 32px;
   z-index: 200;
   width: 52px; height: 52px;
   border-radius: 50%;
@@ -1200,7 +1200,7 @@ footer {
 
 .back-to-top {
   position: fixed;
-  bottom: 32px; right: 32px;
+  bottom: 32px; left: 32px;
   z-index: 200;
   width: 44px; height: 44px;
   border-radius: 50%;
