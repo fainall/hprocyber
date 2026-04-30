@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/mantecio/public_html/
+    - export DEPLOYPATH=/home2/mantecio/hprocyber.com/
     - /bin/cp -r . $DEPLOYPATH
