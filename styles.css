@@ -249,10 +249,10 @@ p { margin: 0; color: var(--fg-dim); }
 }
 .hero-radar {
   position: absolute;
-  right: -120px; top: 50%;
-  width: 900px; height: 900px;
+  right: -60px; top: 50%;
+  width: min(115vh, 1100px); height: min(115vh, 1100px);
   transform: translateY(-50%);
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .hero-inner {
@@ -916,7 +916,7 @@ footer {
 
   .hero { padding-top: 90px; min-height: 100svh; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-  .hero-radar { right: -30%; width: 600px; height: 600px; opacity: 0.35; top: 50%; }
+  .hero-radar { right: -20%; width: 700px; height: 700px; opacity: 0.38; top: 50%; }
   .hero-copy .eyebrow { margin-bottom: 20px; }
   .hero-desc { margin-bottom: 32px; }
   .hero-meta { flex-direction: row; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); }
