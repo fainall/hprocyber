@@ -1,3 +1,6 @@
 # Managed by admin panel — do not track
 content.js
 content-data.json
+
+# cPanel API credentials — never commit
+api/cpanel-config.php

@@ -167,6 +167,57 @@
     font-size: 12px; color: var(--accent); text-decoration: none;
   }
   .preview-link:hover { text-decoration: underline; }
+
+  /* ---- Email section ---- */
+  .email-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .email-table th {
+    text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border); background: #fafafa;
+  }
+  .email-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .email-table tr:last-child td { border-bottom: none; }
+  .email-table tr:hover td { background: var(--bg); }
+  .email-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; background: var(--accent-soft); color: var(--accent);
+  }
+  .btn-sm {
+    padding: 5px 12px; border-radius: 5px; border: 1px solid var(--border);
+    font-size: 12px; font-weight: 600; cursor: pointer; background: var(--surface);
+    color: var(--muted); transition: all .15s; margin-left: 4px;
+  }
+  .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-sm.danger:hover { border-color: var(--danger); color: var(--danger); }
+  .btn-primary {
+    padding: 9px 20px; background: var(--accent); color: #fff;
+    border: none; border-radius: 6px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .88; }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+  .quota-bar { height: 4px; background: var(--border); border-radius: 2px; width: 80px; display: inline-block; vertical-align: middle; }
+  .quota-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface); border-radius: 10px; padding: 28px 32px;
+    width: 420px; max-width: 95vw; border: 1px solid var(--border);
+  }
+  .modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 20px; }
+  .modal .field { margin-bottom: 14px; }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+  .alert { padding: 10px 14px; border-radius: 6px; font-size: 12px; margin-bottom: 14px; }
+  .alert.ok  { background: #f0fdf4; color: var(--success); border: 1px solid #bbf7d0; }
+  .alert.err { background: #fef2f2; color: var(--danger);  border: 1px solid #fecaca; }
+  .counter-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
 </style>
 </head>
 <body>
@@ -182,6 +233,33 @@
     <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
     <button class="login-btn" id="login-btn" onclick="doLogin()">Ingresar</button>
     <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- Modal correos -->
+<div class="modal-overlay" id="email-modal">
+  <div class="modal">
+    <h3 id="modal-title">Nueva cuenta de correo</h3>
+    <div id="modal-alert"></div>
+    <div class="field">
+      <label>Usuario</label>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input type="text" id="modal-user" placeholder="nombre" style="flex:1" />
+        <span style="font-size:13px;color:var(--muted);white-space:nowrap">@hprocyber.com</span>
+      </div>
+    </div>
+    <div class="field" id="modal-pass-wrap">
+      <label>Contraseña</label>
+      <input type="password" id="modal-pass" placeholder="Mínimo 8 caracteres" />
+    </div>
+    <div class="field" id="modal-quota-wrap">
+      <label>Cuota (MB)</label>
+      <input type="number" id="modal-quota" value="500" min="50" max="2048" />
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm" onclick="closeEmailModal()">Cancelar</button>
+      <button class="btn-primary" id="modal-submit" onclick="submitEmailModal()">Crear cuenta</button>
+    </div>
   </div>
 </div>
 
@@ -229,6 +307,10 @@
         <div class="nav-item" onclick="showSection('foot')" id="nav-foot">
           <span class="icon">🦶</span> Footer
         </div>
+        <div class="sidebar-group-label">Hosting</div>
+        <div class="nav-item" onclick="showSection('emails')" id="nav-emails">
+          <span class="icon">📧</span> Correos
+        </div>
       </nav>
       <div class="sidebar-footer">
         <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
@@ -272,7 +354,7 @@ const SECTION_LABELS = {
   hero: 'Hero', problem: 'El Problema', value: 'Propuesta de Valor',
   services: 'Servicios', advisor: 'Servicios Advisor', method: 'Metodología',
   diff: 'Diferenciadores', about: 'Quiénes Somos', plans: 'Planes',
-  cta: 'Contacto', foot: 'Footer'
+  cta: 'Contacto', foot: 'Footer', emails: 'Correos Corporativos'
 };
 
 // ---- Auth ----
@@ -602,6 +684,157 @@ function getDefaultContent() {
   // Will be populated from window.CONTENT if available
   return typeof window.CONTENT !== 'undefined' ? window.CONTENT : { es: {}, en: {} };
 }
+
+// ---- Emails section ----
+let emailModalMode = 'create'; // 'create' | 'passwd'
+let emailModalUser = '';
+
+async function renderEmails() {
+  const area = document.getElementById('content-area');
+  area.innerHTML = '<p style="color:var(--muted);font-size:13px">Cargando cuentas...</p>';
+
+  const r = await fetch(API + 'emails.php');
+  const d = await r.json();
+  if (!d.ok) { area.innerHTML = `<div class="alert err">Error: ${d.error}</div>`; return; }
+
+  const accounts = d.accounts || [];
+  const max = d.max || 10;
+  const used = accounts.length;
+
+  let rows = accounts.map(a => {
+    const pct = a.quota_raw > 0 ? Math.min(100, Math.round((a.used_mb / a.quota_raw) * 100)) : 0;
+    return `<tr>
+      <td><strong>${a.email}</strong></td>
+      <td>
+        <div class="quota-bar"><div class="quota-fill" style="width:${pct}%"></div></div>
+        <span style="margin-left:6px;font-size:11px;color:var(--muted)">${a.used_mb} / ${a.quota_raw} MB</span>
+      </td>
+      <td>
+        <button class="btn-sm" onclick="openPasswdModal('${a.user}')">🔑 Contraseña</button>
+        <button class="btn-sm danger" onclick="deleteEmail('${a.user}')">🗑 Eliminar</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  if (!rows) rows = `<tr><td colspan="3" style="color:var(--muted);text-align:center;padding:24px">No hay cuentas creadas aún</td></tr>`;
+
+  area.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span class="counter-badge">📧 ${used} / ${max} cuentas</span>
+      ${used < max ? `<button class="btn-primary" onclick="openCreateModal()">+ Nueva cuenta</button>` : `<span style="font-size:12px;color:var(--danger);font-weight:600">Límite alcanzado (${max})</span>`}
+    </div>
+    <div class="field-group">
+      <div class="field-group-header">Cuentas @hprocyber.com</div>
+      <table class="email-table">
+        <thead><tr>
+          <th>Correo</th><th>Almacenamiento</th><th>Acciones</th>
+        </tr></thead>
+        <tbody id="email-tbody">${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function openCreateModal() {
+  emailModalMode = 'create';
+  document.getElementById('modal-title').textContent = 'Nueva cuenta de correo';
+  document.getElementById('modal-user').value = '';
+  document.getElementById('modal-user').disabled = false;
+  document.getElementById('modal-pass').value = '';
+  document.getElementById('modal-quota-wrap').style.display = '';
+  document.getElementById('modal-submit').textContent = 'Crear cuenta';
+  document.getElementById('modal-alert').innerHTML = '';
+  document.getElementById('email-modal').classList.add('open');
+}
+
+function openPasswdModal(user) {
+  emailModalMode = 'passwd';
+  emailModalUser = user;
+  document.getElementById('modal-title').textContent = 'Cambiar contraseña';
+  document.getElementById('modal-user').value = user;
+  document.getElementById('modal-user').disabled = true;
+  document.getElementById('modal-pass').value = '';
+  document.getElementById('modal-quota-wrap').style.display = 'none';
+  document.getElementById('modal-submit').textContent = 'Cambiar contraseña';
+  document.getElementById('modal-alert').innerHTML = '';
+  document.getElementById('email-modal').classList.add('open');
+}
+
+function closeEmailModal() {
+  document.getElementById('email-modal').classList.remove('open');
+}
+
+function showModalAlert(msg, type) {
+  document.getElementById('modal-alert').innerHTML = `<div class="alert ${type}">${msg}</div>`;
+}
+
+async function submitEmailModal() {
+  const btn = document.getElementById('modal-submit');
+  const user = document.getElementById('modal-user').value.trim();
+  const pass = document.getElementById('modal-pass').value.trim();
+  const quota = parseInt(document.getElementById('modal-quota').value) || 500;
+
+  if (!pass || pass.length < 8) { showModalAlert('La contraseña debe tener al menos 8 caracteres', 'err'); return; }
+
+  btn.disabled = true;
+  btn.textContent = emailModalMode === 'create' ? 'Creando...' : 'Guardando...';
+
+  try {
+    let r, d;
+    if (emailModalMode === 'create') {
+      r = await fetch(API + 'emails.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create', user, pass, quota })
+      });
+    } else {
+      r = await fetch(API + 'emails.php', {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'passwd', user: emailModalUser, pass })
+      });
+    }
+    d = await r.json();
+    if (d.ok) {
+      closeEmailModal();
+      renderEmails();
+    } else {
+      showModalAlert(d.error || 'Error desconocido', 'err');
+    }
+  } catch { showModalAlert('Error de conexión', 'err'); }
+
+  btn.disabled = false;
+  btn.textContent = emailModalMode === 'create' ? 'Crear cuenta' : 'Cambiar contraseña';
+}
+
+async function deleteEmail(user) {
+  if (!confirm(`¿Eliminar ${user}@hprocyber.com? Esta acción no se puede deshacer.`)) return;
+  const r = await fetch(API + 'emails.php', {
+    method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user })
+  });
+  const d = await r.json();
+  if (d.ok) { renderEmails(); }
+  else { alert('Error: ' + (d.error || 'No se pudo eliminar')); }
+}
+
+// Patch showSection to handle emails
+const _origShowSection = showSection;
+showSection = function(section) {
+  if (section === 'emails') {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-emails').classList.add('active');
+    document.getElementById('topbar-title').textContent = SECTION_LABELS['emails'];
+    currentSection = 'emails';
+    document.getElementById('save-btn').style.display = 'none';
+    renderEmails();
+  } else {
+    document.getElementById('save-btn').style.display = '';
+    _origShowSection(section);
+  }
+};
+
+// Close modal on overlay click
+document.getElementById('email-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEmailModal();
+});
 
 // Check session on load
 (async () => {
