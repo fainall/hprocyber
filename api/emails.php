@@ -75,14 +75,16 @@ if ($method === 'GET') {
         echo json_encode(['ok' => false, 'error' => implode(', ', $res['errors'])]);
         exit;
     }
+    // Filtrar estrictamente por dominio hprocyber.com
+    $all = array_filter($res['data'] ?? [], fn($a) => ($a['domain'] ?? '') === CPANEL_DOMAIN);
     $accounts = array_map(fn($a) => [
         'email'     => $a['email'],
         'user'      => $a['login'],
         'quota_mb'  => $a['_maximumdiskused'] ?? ($a['diskquota'] ?? 0),
         'used_mb'   => round(($a['_diskused'] ?? 0) / 1024 / 1024, 2),
         'quota_raw' => $a['diskquota'] ?? 0,
-    ], $res['data'] ?? []);
-    echo json_encode(['ok' => true, 'accounts' => $accounts, 'max' => CPANEL_MAX_ACCOUNTS]);
+    ], $all);
+    echo json_encode(['ok' => true, 'accounts' => array_values($accounts), 'max' => CPANEL_MAX_ACCOUNTS]);
     exit;
 }
 
@@ -99,9 +101,9 @@ if ($method === 'POST' && ($body['action'] ?? '') === 'create') {
         echo json_encode(['ok' => false, 'error' => 'Usuario inválido (solo letras, números, puntos, guiones)']); exit;
     }
 
-    // Verificar límite
-    $list = cpanel_call('Email', 'list_pops', ['domain' => CPANEL_DOMAIN]);
-    $count = count($list['data'] ?? []);
+    // Verificar límite (solo cuentas de hprocyber.com)
+    $list  = cpanel_call('Email', 'list_pops', ['domain' => CPANEL_DOMAIN]);
+    $count = count(array_filter($list['data'] ?? [], fn($a) => ($a['domain'] ?? '') === CPANEL_DOMAIN));
     if ($count >= CPANEL_MAX_ACCOUNTS) {
         echo json_encode(['ok' => false, 'error' => 'Límite de ' . CPANEL_MAX_ACCOUNTS . ' cuentas alcanzado']); exit;
     }
