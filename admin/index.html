@@ -218,6 +218,66 @@
     background: var(--accent-soft); color: var(--accent);
     padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
   }
+
+  /* ---- Toast notifications ---- */
+  #toast-container {
+    position: fixed; top: 20px; right: 24px; z-index: 999;
+    display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+  }
+  .toast {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: #fff; border-radius: 8px; padding: 14px 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12); border-left: 4px solid var(--accent);
+    min-width: 280px; max-width: 360px; pointer-events: all;
+    animation: toast-in .25s ease; font-size: 13px;
+  }
+  .toast.success { border-color: var(--success); }
+  .toast.error   { border-color: var(--danger); }
+  .toast.warning { border-color: #f59e0b; }
+  .toast-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .toast-body { flex: 1; }
+  .toast-title { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+  .toast-msg   { color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .toast-close {
+    background: none; border: none; cursor: pointer; color: var(--muted);
+    font-size: 16px; line-height: 1; padding: 0; flex-shrink: 0;
+  }
+  .toast-close:hover { color: var(--text); }
+  .toast.hiding { animation: toast-out .25s ease forwards; }
+  @keyframes toast-in  { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes toast-out { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(20px); } }
+
+  /* ---- Password strength ---- */
+  .pass-strength { margin-top: 8px; }
+  .strength-bar  {
+    height: 4px; border-radius: 2px; background: var(--border);
+    overflow: hidden; margin-bottom: 5px;
+  }
+  .strength-fill {
+    height: 100%; border-radius: 2px; width: 0%;
+    transition: width .3s, background .3s;
+  }
+  .strength-label { font-size: 11px; font-weight: 600; }
+  .strength-0 .strength-fill { width: 0%;   background: transparent; }
+  .strength-1 .strength-fill { width: 25%;  background: #ef4444; }
+  .strength-2 .strength-fill { width: 50%;  background: #f59e0b; }
+  .strength-3 .strength-fill { width: 75%;  background: #3b82f6; }
+  .strength-4 .strength-fill { width: 100%; background: #16a34a; }
+  .strength-0 .strength-label { color: var(--muted); }
+  .strength-1 .strength-label { color: #ef4444; }
+  .strength-2 .strength-label { color: #f59e0b; }
+  .strength-3 .strength-label { color: #3b82f6; }
+  .strength-4 .strength-label { color: #16a34a; }
+  .strength-checks { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 6px; }
+  .strength-check  { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 3px; }
+  .strength-check.ok { color: var(--success); }
+
+  /* ---- Field validation ---- */
+  .field-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .field-hint.err { color: var(--danger); }
+  .field-hint.ok  { color: var(--success); }
+  input.input-err  { border-color: var(--danger) !important; }
+  input.input-ok   { border-color: var(--success) !important; }
 </style>
 </head>
 <body>
@@ -236,25 +296,48 @@
   </div>
 </div>
 
+<!-- Toast container -->
+<div id="toast-container"></div>
+
 <!-- Modal correos -->
 <div class="modal-overlay" id="email-modal">
   <div class="modal">
     <h3 id="modal-title">Nueva cuenta de correo</h3>
     <div id="modal-alert"></div>
-    <div class="field">
+    <div class="field" id="modal-user-wrap">
       <label>Usuario</label>
       <div style="display:flex;align-items:center;gap:6px">
-        <input type="text" id="modal-user" placeholder="nombre" style="flex:1" />
+        <input type="text" id="modal-user" placeholder="nombre" style="flex:1"
+          oninput="validateUser(this)" autocomplete="off" />
         <span style="font-size:13px;color:var(--muted);white-space:nowrap">@hprocyber.com</span>
       </div>
+      <div class="field-hint" id="user-hint"></div>
     </div>
     <div class="field" id="modal-pass-wrap">
       <label>Contraseña</label>
-      <input type="password" id="modal-pass" placeholder="Mínimo 8 caracteres" />
+      <div style="position:relative">
+        <input type="password" id="modal-pass" placeholder="Escribe una contraseña segura"
+          style="width:100%;padding-right:38px" oninput="evalPassword(this.value)" />
+        <button type="button" onclick="togglePassVis()" title="Mostrar/ocultar"
+          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:var(--muted)" id="pass-eye">👁</button>
+      </div>
+      <div class="pass-strength strength-0" id="pass-strength">
+        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="strength-label" id="strength-label">Escribe una contraseña</span>
+        </div>
+        <div class="strength-checks" id="strength-checks">
+          <span class="strength-check" id="chk-len">✗ 8+ caracteres</span>
+          <span class="strength-check" id="chk-upper">✗ Mayúscula</span>
+          <span class="strength-check" id="chk-num">✗ Número</span>
+          <span class="strength-check" id="chk-sym">✗ Símbolo</span>
+        </div>
+      </div>
     </div>
     <div class="field" id="modal-quota-wrap">
-      <label>Cuota (MB)</label>
+      <label>Cuota de almacenamiento (MB)</label>
       <input type="number" id="modal-quota" value="500" min="50" max="2048" />
+      <div class="field-hint">Recomendado: 500 MB por cuenta</div>
     </div>
     <div class="modal-footer">
       <button class="btn-sm" onclick="closeEmailModal()">Cancelar</button>
@@ -685,51 +768,138 @@ function getDefaultContent() {
   return typeof window.CONTENT !== 'undefined' ? window.CONTENT : { es: {}, en: {} };
 }
 
+// ---- Toast system ----
+function toast(title, msg, type = 'success', duration = 4000) {
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `
+    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+    <div class="toast-body">
+      <div class="toast-title">${title}</div>
+      ${msg ? `<div class="toast-msg">${msg}</div>` : ''}
+    </div>
+    <button class="toast-close" onclick="dismissToast(this.parentElement)">×</button>`;
+  document.getElementById('toast-container').appendChild(el);
+  if (duration > 0) setTimeout(() => dismissToast(el), duration);
+}
+function dismissToast(el) {
+  if (!el || el.classList.contains('hiding')) return;
+  el.classList.add('hiding');
+  setTimeout(() => el.remove(), 260);
+}
+
+// ---- Password strength ----
+function evalPassword(val) {
+  const checks = {
+    len:   val.length >= 8,
+    upper: /[A-Z]/.test(val),
+    num:   /[0-9]/.test(val),
+    sym:   /[^A-Za-z0-9]/.test(val),
+  };
+  const score = Object.values(checks).filter(Boolean).length;
+  const labels = ['', 'Muy débil', 'Débil', 'Aceptable', 'Segura'];
+  const wrap = document.getElementById('pass-strength');
+  wrap.className = `pass-strength strength-${val ? score : 0}`;
+  document.getElementById('strength-label').textContent = val ? labels[score] : 'Escribe una contraseña';
+
+  const setChk = (id, ok, txt) => {
+    const el = document.getElementById(id);
+    el.className = 'strength-check' + (ok ? ' ok' : '');
+    el.textContent = (ok ? '✓ ' : '✗ ') + txt;
+  };
+  setChk('chk-len',   checks.len,   '8+ caracteres');
+  setChk('chk-upper', checks.upper, 'Mayúscula');
+  setChk('chk-num',   checks.num,   'Número');
+  setChk('chk-sym',   checks.sym,   'Símbolo (!@#...)');
+
+  return { score, checks };
+}
+
+function togglePassVis() {
+  const inp = document.getElementById('modal-pass');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById('pass-eye').textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
+// ---- User field validation ----
+function validateUser(input) {
+  const val = input.value.trim();
+  const hint = document.getElementById('user-hint');
+  if (!val) { hint.textContent = ''; input.className = ''; return false; }
+  if (!/^[a-z0-9._+-]+$/.test(val)) {
+    hint.textContent = 'Solo letras minúsculas, números, puntos y guiones';
+    hint.className = 'field-hint err';
+    input.className = 'input-err';
+    return false;
+  }
+  hint.textContent = `Se creará: ${val}@hprocyber.com`;
+  hint.className = 'field-hint ok';
+  input.className = 'input-ok';
+  return true;
+}
+
 // ---- Emails section ----
-let emailModalMode = 'create'; // 'create' | 'passwd'
+let emailModalMode = 'create';
 let emailModalUser = '';
 
 async function renderEmails() {
   const area = document.getElementById('content-area');
-  area.innerHTML = '<p style="color:var(--muted);font-size:13px">Cargando cuentas...</p>';
+  area.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:8px 0">Cargando cuentas...</p>';
 
-  const r = await fetch(API + 'emails.php');
-  const d = await r.json();
+  let d;
+  try {
+    const r = await fetch(API + 'emails.php');
+    d = await r.json();
+  } catch {
+    area.innerHTML = `<div class="alert err">⚠️ Error de conexión con el servidor</div>`;
+    return;
+  }
   if (!d.ok) { area.innerHTML = `<div class="alert err">Error: ${d.error}</div>`; return; }
 
   const accounts = d.accounts || [];
   const max = d.max || 10;
   const used = accounts.length;
+  const warn = used >= max * 0.8;
 
   let rows = accounts.map(a => {
     const pct = a.quota_raw > 0 ? Math.min(100, Math.round((a.used_mb / a.quota_raw) * 100)) : 0;
+    const barColor = pct > 85 ? '#ef4444' : pct > 60 ? '#f59e0b' : 'var(--accent)';
     return `<tr>
       <td><strong>${a.email}</strong></td>
       <td>
-        <div class="quota-bar"><div class="quota-fill" style="width:${pct}%"></div></div>
-        <span style="margin-left:6px;font-size:11px;color:var(--muted)">${a.used_mb} / ${a.quota_raw} MB</span>
+        <div class="quota-bar"><div class="quota-fill" style="width:${pct}%;background:${barColor}"></div></div>
+        <span style="margin-left:8px;font-size:11px;color:var(--muted)">${a.used_mb} / ${a.quota_raw} MB (${pct}%)</span>
+        ${pct > 85 ? `<span style="margin-left:6px;font-size:11px;color:#ef4444;font-weight:700">⚠️ Casi lleno</span>` : ''}
       </td>
       <td>
         <button class="btn-sm" onclick="openPasswdModal('${a.user}')">🔑 Contraseña</button>
-        <button class="btn-sm danger" onclick="deleteEmail('${a.user}')">🗑 Eliminar</button>
+        <button class="btn-sm danger" onclick="deleteEmail('${a.user}', '${a.email}')">🗑 Eliminar</button>
       </td>
     </tr>`;
   }).join('');
 
-  if (!rows) rows = `<tr><td colspan="3" style="color:var(--muted);text-align:center;padding:24px">No hay cuentas creadas aún</td></tr>`;
+  if (!rows) rows = `<tr><td colspan="3" style="color:var(--muted);text-align:center;padding:28px">
+    <div style="font-size:24px;margin-bottom:8px">📭</div>
+    <div>No hay cuentas creadas aún</div>
+    <div style="font-size:11px;margin-top:4px">Crea tu primera cuenta con el botón de arriba</div>
+  </td></tr>`;
 
   area.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <span class="counter-badge">📧 ${used} / ${max} cuentas</span>
-      ${used < max ? `<button class="btn-primary" onclick="openCreateModal()">+ Nueva cuenta</button>` : `<span style="font-size:12px;color:var(--danger);font-weight:600">Límite alcanzado (${max})</span>`}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <span class="counter-badge" style="${warn ? 'background:#fef3c7;color:#92400e' : ''}">
+        📧 ${used} / ${max} cuentas usadas
+      </span>
+      ${used < max
+        ? `<button class="btn-primary" onclick="openCreateModal()">+ Nueva cuenta</button>`
+        : `<span style="font-size:12px;color:var(--danger);font-weight:600">🚫 Límite de ${max} cuentas alcanzado</span>`}
     </div>
+    ${warn && used < max ? `<div class="alert" style="background:#fffbeb;color:#92400e;border:1px solid #fde68a;margin-bottom:16px">⚠️ Te quedan solo ${max - used} cuenta(s) disponible(s)</div>` : ''}
     <div class="field-group">
       <div class="field-group-header">Cuentas @hprocyber.com</div>
       <table class="email-table">
-        <thead><tr>
-          <th>Correo</th><th>Almacenamiento</th><th>Acciones</th>
-        </tr></thead>
-        <tbody id="email-tbody">${rows}</tbody>
+        <thead><tr><th>Correo</th><th>Almacenamiento</th><th>Acciones</th></tr></thead>
+        <tbody>${rows}</tbody>
       </table>
     </div>`;
 }
@@ -739,24 +909,35 @@ function openCreateModal() {
   document.getElementById('modal-title').textContent = 'Nueva cuenta de correo';
   document.getElementById('modal-user').value = '';
   document.getElementById('modal-user').disabled = false;
+  document.getElementById('modal-user').className = '';
+  document.getElementById('user-hint').textContent = '';
+  document.getElementById('user-hint').className = 'field-hint';
+  document.getElementById('modal-user-wrap').style.display = '';
   document.getElementById('modal-pass').value = '';
+  document.getElementById('modal-pass').type = 'password';
+  document.getElementById('pass-eye').textContent = '👁';
   document.getElementById('modal-quota-wrap').style.display = '';
   document.getElementById('modal-submit').textContent = 'Crear cuenta';
   document.getElementById('modal-alert').innerHTML = '';
+  evalPassword('');
   document.getElementById('email-modal').classList.add('open');
+  setTimeout(() => document.getElementById('modal-user').focus(), 100);
 }
 
 function openPasswdModal(user) {
   emailModalMode = 'passwd';
   emailModalUser = user;
-  document.getElementById('modal-title').textContent = 'Cambiar contraseña';
-  document.getElementById('modal-user').value = user;
-  document.getElementById('modal-user').disabled = true;
+  document.getElementById('modal-title').textContent = `Cambiar contraseña — ${user}@hprocyber.com`;
+  document.getElementById('modal-user-wrap').style.display = 'none';
   document.getElementById('modal-pass').value = '';
+  document.getElementById('modal-pass').type = 'password';
+  document.getElementById('pass-eye').textContent = '👁';
   document.getElementById('modal-quota-wrap').style.display = 'none';
   document.getElementById('modal-submit').textContent = 'Cambiar contraseña';
   document.getElementById('modal-alert').innerHTML = '';
+  evalPassword('');
   document.getElementById('email-modal').classList.add('open');
+  setTimeout(() => document.getElementById('modal-pass').focus(), 100);
 }
 
 function closeEmailModal() {
@@ -768,15 +949,28 @@ function showModalAlert(msg, type) {
 }
 
 async function submitEmailModal() {
-  const btn = document.getElementById('modal-submit');
-  const user = document.getElementById('modal-user').value.trim();
-  const pass = document.getElementById('modal-pass').value.trim();
+  const btn  = document.getElementById('modal-submit');
+  const user = document.getElementById('modal-user').value.trim().toLowerCase();
+  const pass = document.getElementById('modal-pass').value;
   const quota = parseInt(document.getElementById('modal-quota').value) || 500;
 
-  if (!pass || pass.length < 8) { showModalAlert('La contraseña debe tener al menos 8 caracteres', 'err'); return; }
+  // Validaciones
+  if (emailModalMode === 'create' && !validateUser(document.getElementById('modal-user'))) {
+    showModalAlert('Corrige el nombre de usuario antes de continuar', 'err'); return;
+  }
+  if (!pass) { showModalAlert('Ingresa una contraseña', 'err'); return; }
+
+  const { score } = evalPassword(pass);
+  if (score < 2) {
+    showModalAlert('La contraseña es muy débil. Agrega mayúsculas, números o símbolos.', 'err'); return;
+  }
+  if (score === 2) {
+    showModalAlert('La contraseña es débil. Te recomendamos hacerla más segura.', 'err'); return;
+  }
 
   btn.disabled = true;
   btn.textContent = emailModalMode === 'create' ? 'Creando...' : 'Guardando...';
+  document.getElementById('modal-alert').innerHTML = '';
 
   try {
     let r, d;
@@ -794,25 +988,46 @@ async function submitEmailModal() {
     d = await r.json();
     if (d.ok) {
       closeEmailModal();
-      renderEmails();
+      await renderEmails();
+      if (emailModalMode === 'create') {
+        toast('Cuenta creada', `${user}@hprocyber.com está lista para usar`, 'success');
+      } else {
+        toast('Contraseña actualizada', `La contraseña de ${emailModalUser}@hprocyber.com fue cambiada`, 'success');
+      }
     } else {
       showModalAlert(d.error || 'Error desconocido', 'err');
     }
-  } catch { showModalAlert('Error de conexión', 'err'); }
+  } catch {
+    showModalAlert('Error de conexión con el servidor', 'err');
+  }
 
   btn.disabled = false;
   btn.textContent = emailModalMode === 'create' ? 'Crear cuenta' : 'Cambiar contraseña';
 }
 
-async function deleteEmail(user) {
-  if (!confirm(`¿Eliminar ${user}@hprocyber.com? Esta acción no se puede deshacer.`)) return;
-  const r = await fetch(API + 'emails.php', {
-    method: 'DELETE', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user })
-  });
-  const d = await r.json();
-  if (d.ok) { renderEmails(); }
-  else { alert('Error: ' + (d.error || 'No se pudo eliminar')); }
+async function deleteEmail(user, email) {
+  // Confirmación mejorada
+  const ok = confirm(`¿Eliminar la cuenta ${email}?\n\nEsta acción es permanente y no se puede deshacer.\nTodos los correos almacenados se perderán.`);
+  if (!ok) return;
+
+  const t = toast('Eliminando...', `Borrando ${email}`, 'info', 0);
+  try {
+    const r = await fetch(API + 'emails.php', {
+      method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user })
+    });
+    const d = await r.json();
+    dismissToast(t);
+    if (d.ok) {
+      await renderEmails();
+      toast('Cuenta eliminada', `${email} fue eliminada correctamente`, 'success');
+    } else {
+      toast('Error al eliminar', d.error || 'No se pudo eliminar la cuenta', 'error');
+    }
+  } catch {
+    dismissToast(t);
+    toast('Error de conexión', 'No se pudo conectar con el servidor', 'error');
+  }
 }
 
 // Patch showSection to handle emails
